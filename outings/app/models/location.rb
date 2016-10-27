@@ -14,4 +14,7 @@ class Location < ApplicationRecord
   has_many :plans
   has_many :reviews
 
+  validates :name, uniqueness: true
+  validates :name, presence: true
+
 end

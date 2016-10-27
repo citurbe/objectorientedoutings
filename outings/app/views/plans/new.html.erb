@@ -1,0 +1,12 @@
+<h1>Make a Plan: </h1>
+<%= form_for @plan do |f| %>
+  <h2>Where? </h2>
+    <h3>Places we've been: <%= f.select :location_id, Location.all.collect{|l| [l.name, l.id]}, include_blank: true %></h3>
+    <br>
+    <h3>Make a new one: <%= f.text_field :location%></h3>
+  <br>
+  <h2>When? </h2><%= f.datetime_local_field :timing%>
+  <br>
+  <%= f.submit "Create Plan" %>
+
+<% end %>
