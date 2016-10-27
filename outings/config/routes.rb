@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root 'sessions#index'
+
   resources :locations
   resources :reviews
   resources :outings
