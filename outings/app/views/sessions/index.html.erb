@@ -5,7 +5,7 @@
   <h1>Happening Today: </h1>
   <% @organization.plans.each do |plan| %>
     <% if plan.timing.strftime('%j') == Time.now.strftime('%j') %>
-       <button class="well"><%= "#{plan.location.name} - #{plan.timing.hour} - #{plan.organizer.name} - #{plan.users.count} People" %></button>
+       <%= button_to "#{plan.location.name} - #{plan.timing.hour} - #{plan.organizer.name} - #{plan.users.count} People", plan_path(plan), {method: "get", class: "well"} %>
     <% end %>
   <% end %>
 </div>
