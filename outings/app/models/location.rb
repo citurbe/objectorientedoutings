@@ -11,4 +11,7 @@
 #
 
 class Location < ApplicationRecord
+  has_many :plans
+  has_many :reviews
+
 end

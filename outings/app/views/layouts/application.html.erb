@@ -38,9 +38,14 @@
           <div class="navbar-brand">Object Oriented Outings
           </div>
             <ul class="nav navbar-nav">
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Login</a></li>
-              <li><a href="#" id="id">Drop</a></li>
+              <li><a href="/">Home</a></li>
+              <% if current_user %>
+                <li><a href="<%= user_path(current_user) %>"><%= current_user.name %></a></li>
+                <li><a href="/logout">Logout</a></li>
+              <% else %>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/logup">Logup</a></li>
+              <% end %>
             </ul>
           </div>
         </div>

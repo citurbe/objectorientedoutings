@@ -11,4 +11,7 @@
 #
 
 class Plan < ApplicationRecord
+  belongs_to :location
+  has_many :outings
+  has_many :users, through: :outings
 end
