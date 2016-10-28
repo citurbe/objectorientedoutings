@@ -5,3 +5,9 @@
 <% if @user.id == session[:user_id] %>
   <%= button_to "Edit", edit_user_path(@user), method: 'get' %>
 <% end %>
+<h2>Your Reviews:</h2>
+<ul>
+<% @user.reviews.each do |review| %>
+<li><%= link_to review.location.name, review_path(review) %></li>
+<% end %>
+</ul>

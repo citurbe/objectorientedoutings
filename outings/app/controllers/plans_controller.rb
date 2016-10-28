@@ -6,7 +6,7 @@ class PlansController < ApplicationController
 
   def create
     return redirect_to new_plan_path if params[:plan][:timing] == "" || (params[:plan][:location_id] == "" && params[:plan][:location] == "")
-    
+
     @plan = Plan.new(plan_params(:timing))
     @plan.location_id, @plan.organizer_id, @plan.organization_id = get_loc(params), current_user.id, 1
     if @plan.save
@@ -42,10 +42,18 @@ class PlansController < ApplicationController
   end
 
   def edit
-    @plan = Plan.new
+    @plan = Plan.find(params[:id])
   end
 
   def update
+    @plan = Plan.find(params[:id])
+    @plan.update_attributes(location_id: get_loc(params), timing: params[:plan][:timing])
+    if !@plan.errors.messages.empty?
+      flash[:notice] = @plan.errors.messages
+      redirect_to edit_plan_path(@plan)
+    else
+      redirect_to plan_path(@plan)
+    end
 
   end
 
