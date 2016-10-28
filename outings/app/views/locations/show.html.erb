@@ -1,7 +1,11 @@
 <h1><%= @location.name %></h1>
 
 <!-- review button to reviews#new, needs to pass location_id -->
-<h4>Average Score: <%= @location.display_score %></h4>
+<% if @location.reviews.average(:score) %>
+  <h4>Average Score: <%= @location.reviews.average(:score) %>
+<% else %>
+   This location has no reviews
+<% end %>
 <%= button_to "Leave a Review!", new_review_path, {method:'get',params:{location_id: @location.id}} %>
 <br>
 <% @location.reviews.each do |review| %>
