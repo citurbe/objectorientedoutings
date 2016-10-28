@@ -34,10 +34,6 @@ class UsersController < ApplicationController
     else
       redirect_to user_path(@user)
     end
-    # else
-    #   flash[:notice] = @user.errors.messages
-    #   redirect_to edit_user_path(@user)
-    # end
   end
 
   private
