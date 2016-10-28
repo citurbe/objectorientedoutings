@@ -13,4 +13,7 @@ class Organization < ApplicationRecord
   has_many :users
   has_many :plans
 
+  validates :name, presence: true
+  validates :name, uniqueness: true
+
 end

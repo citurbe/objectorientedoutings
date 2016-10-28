@@ -16,4 +16,7 @@ class Plan < ApplicationRecord
   has_many :outings
   belongs_to :organizer, class_name: 'User', foreign_key: 'organizer_id'
   has_many :users, through: :outings
+
+  validates :location_id, presence: true
+  validates :timing, presence: true
 end

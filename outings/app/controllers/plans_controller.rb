@@ -5,6 +5,8 @@ class PlansController < ApplicationController
   end
 
   def create
+    return redirect_to new_plan_path if params[:plan][:timing] == "" || (params[:plan][:location_id] == "" && params[:plan][:location] == "")
+    
     @plan = Plan.new(plan_params(:timing))
     @plan.location_id, @plan.organizer_id, @plan.organization_id = get_loc(params), current_user.id, 1
     if @plan.save
@@ -19,6 +21,7 @@ class PlansController < ApplicationController
     if params[:plan][:location_id] != "" && !params[:plan][:location_id] != nil
       Location.find(params[:plan][:location_id]).id
     else
+
       make_loc(params).id
     end
   end

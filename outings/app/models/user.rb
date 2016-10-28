@@ -14,15 +14,22 @@
 
 class User < ApplicationRecord
   has_secure_password
-  validates :email, presence: true
+  validates :email, :password, :password_confirmation, :organization_id, presence: true
   validates :email, uniqueness: true
-  validates :password, presence: true
-  validates :organization_id, presence: true
+  validate :phone_number_format
 
   belongs_to :organization
   has_many :outings
   has_many :plans, through: :outings
   has_many :locations, through: :plans
   has_many :reviews
+
+
+  def phone_number_format
+  nums = self.phone.scan(/([0-9])/).flatten.join
+  unless nums.length == 10 || nums.length == 0
+    self.errors[:phone] << "Phone number must be 10 digits exactly!"
+  end
+end
 
 end
