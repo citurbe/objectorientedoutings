@@ -20,4 +20,5 @@ class Plan < ApplicationRecord
 
   validates :location_id, presence: true
   validates :timing, presence: true
+  validates :user_id, uniqueness: true
 end
