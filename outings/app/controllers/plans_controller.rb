@@ -58,7 +58,14 @@ class PlansController < ApplicationController
   end
 
   def destroy
+    Plan.find(params[:id]).destroy
+    redirect_to root_path
+  end
 
+  def leave
+    byebug
+    Outing.destroy(Outing.where(["plan_id = ? and user_id = ?", params[:id], current_user.id]))
+    redirect_to plan_path(params[:id])
   end
 
   private

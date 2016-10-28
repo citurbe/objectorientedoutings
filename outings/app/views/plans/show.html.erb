@@ -7,6 +7,9 @@
 <% if !@plan.users.include?(current_user) && current_user.plans.select {|plan| plan.timing.hour == @plan.timing.hour && plan.timing.strftime('%j') == @plan.timing.strftime('%j')}.empty?%>
   <%= button_to "I'm in", {action: "create", controller: "outings", id: @plan.id}%>
 <% end %>
-<% if @plan.organizer_id = current_user.id %>
-<%= button_to "Edit Plan", edit_plan_path(@plan), method: 'get' %>
+<% if @plan.organizer_id == current_user.id %>
+  <%= button_to "Edit Plan", edit_plan_path(@plan), method: 'get' %>
+  <%= button_to "Cancel Plan", plan_path(@plan), method: 'delete' %>
+<% elsif @plan.users.include?(current_user)%>
+  <%= button_to "Leave Plan", leave_plan_path%>
 <% end %>
