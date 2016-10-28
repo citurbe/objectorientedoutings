@@ -17,4 +17,11 @@ class Location < ApplicationRecord
   validates :name, uniqueness: true
   validates :name, presence: true
 
+  def display_score
+    reviews = self.reviews.map {|revs| revs.score}
+    num = 0
+    reviews.each {|rev| num += rev}
+    num.to_f/reviews.size
+  end
+
 end

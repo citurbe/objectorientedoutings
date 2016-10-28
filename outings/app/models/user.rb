@@ -5,11 +5,12 @@
 #  id              :integer          not null, primary key
 #  name            :string
 #  email           :string
-#  phone           :integer
+#  phone           :string
 #  user_name       :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  password_digest :string
+#  organization_id :integer
 #
 
 class User < ApplicationRecord
