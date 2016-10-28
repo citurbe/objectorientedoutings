@@ -26,7 +26,18 @@ class UsersController < ApplicationController
   end
 
   def update
-
+    @user = User.find(params[:id])
+    @user.update_attributes(user_params(:name, :email, :phone, :user_name))
+    if !@user.errors.messages.empty?
+      flash[:notice] = @user.errors.messages
+      redirect_to edit_user_path(@user)
+    else
+      redirect_to user_path(@user)
+    end
+    # else
+    #   flash[:notice] = @user.errors.messages
+    #   redirect_to edit_user_path(@user)
+    # end
   end
 
   private

@@ -14,9 +14,10 @@
 
 class User < ApplicationRecord
   has_secure_password
-  validates :email, :password, :password_confirmation, :organization_id, presence: true
+  validates :email, :organization_id, presence: true
   validates :email, uniqueness: true
   validate :phone_number_format
+  validates :password, :password_confirmation, presence: true, on: :create
 
   belongs_to :organization
   has_many :outings

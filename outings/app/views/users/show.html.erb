@@ -2,3 +2,6 @@
 <h2>Email: <%= @user.email %></h2>
 <h2>Phone #: <%= @user.phone %></h2>
 <h2>IM User: <%= @user.user_name %></h2>
+<% if @user.id == session[:user_id] %>
+  <%= button_to "Edit", edit_user_path(@user), method: 'get' %>
+<% end %>
