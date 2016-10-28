@@ -4,6 +4,6 @@
     <li><%= user.name %><br></li>
   <% end %>
 </ul>
-<% if !@plan.users.include?(current_user) %>
+<% if !@plan.users.include?(current_user) && current_user.plans.select {|plan| plan.timing.hour == @plan.timing.hour && plan.timing.strftime('%j') == @plan.timing.strftime('%j')}.empty?%>
   <%= button_to "I'm in", {action: "create", controller: "outings", id: @plan.id}%>
 <% end %>

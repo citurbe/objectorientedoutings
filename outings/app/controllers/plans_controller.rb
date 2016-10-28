@@ -8,6 +8,7 @@ class PlansController < ApplicationController
     @plan = Plan.new(plan_params(:timing))
     @plan.location_id, @plan.organizer_id, @plan.organization_id = get_loc(params), current_user.id, 1
     if @plan.save
+      Outing.create(user_id: current_user.id, plan_id: @plan.id)
       redirect_to plan_path(@plan)
     else
       redirect_to new_plan_path
