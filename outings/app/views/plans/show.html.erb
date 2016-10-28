@@ -1,1 +1,9 @@
 <h1><%= "#{@plan.location.name} at #{@plan.timing}"  %></h1>
+<ul><h2>Currently going:</h2>
+  <% @plan.users.each do |user| %>
+    <li><%= user.name %><br></li>
+  <% end %>
+</ul>
+<% if !@plan.users.include?(current_user) && current_user.plans.select {|plan| plan.timing.hour == @plan.timing.hour && plan.timing.strftime('%j') == @plan.timing.strftime('%j')}.empty?%>
+  <%= button_to "I'm in", {action: "create", controller: "outings", id: @plan.id}%>
+<% end %>
