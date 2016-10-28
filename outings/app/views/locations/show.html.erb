@@ -1,0 +1,4 @@
+<h1><%= @location.name %></h1>
+
+<!-- review button to reviews#new, needs to pass location_id -->
+<%= button_to "Leave a Review!", new_review_path, {method:'get',params:{location_id: @location.id}} %>
