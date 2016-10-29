@@ -26,6 +26,14 @@ class User < ApplicationRecord
   has_many :locations, through: :plans
   has_many :reviews
 
+  def phone_digits_only
+    nums = self.phone.scan(/([0-9])/).flatten.join
+  end
+
+  def display_phone
+    digits = self.phone_digits_only
+    formatted = "(#{digits[0..2]}) #{digits[3..5]} - #{digits[6..9]}"
+  end
 
   def phone_number_format
   nums = self.phone.scan(/([0-9])/).flatten.join
