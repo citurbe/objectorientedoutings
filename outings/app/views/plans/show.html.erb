@@ -4,7 +4,7 @@
     <li><%= user.name %><br></li>
   <% end %>
 </ul>
-<% if !@plan.users.include?(current_user) && current_user.plans.select {|plan| plan.timing.hour == @plan.timing.hour && plan.timing.strftime('%j') == @plan.timing.strftime('%j')}.empty?%>
+<% if !@plan.users.include?(current_user) && !current_user.conflict?(@plan.timing)%>
   <%= button_to "I'm in", {action: "create", controller: "outings", id: @plan.id}%>
 <% end %>
 <% if @plan.organizer_id == current_user.id %>

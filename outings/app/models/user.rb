@@ -55,5 +55,16 @@ class User < ApplicationRecord
     end
   end
 
+  def camel_case
+    name = self.name.split.map do |word|
+      word = word.split("")
+      word.first.capitalize!
+      word.join('')
+    end
+    name.join(' ')
+  end
 
+  def conflict?(timing)
+    self.plans.map(&:timing).include?(timing)
+  end
 end

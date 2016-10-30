@@ -21,8 +21,6 @@ class Plan < ApplicationRecord
   validates :location_id, presence: true
   validates :timing, presence: true
 
-
-
   def time_to_go
     self.users.each do |user|
       if user.name != self.organizer.name
@@ -32,4 +30,34 @@ class Plan < ApplicationRecord
     end
   end
 
+  def summary
+    "#{self.organizer.camel_case} is going to #{self.location.name} with #{self.users.count - 1} other people on #{self.day} at #{self.timing.strftime('%r')}"
+  end
+
+  def day
+    self.timing.strftime('%a, %b %d')
+  end
+
+  def front_page?(current_user)
+    self.timing.strftime('%j').to_i >= Time.now.strftime('%j').to_i &&
+       self.timing.strftime('%j').to_i <= Time.now.strftime('%j').to_i + 3 &&
+       !current_user.plans.include?(self)
+  end
+
+  def get_loc(params)
+    if params[:plan][:location_id] != "" && !params[:plan][:location_id] != nil
+      Location.find(params[:plan][:location_id]).id
+    else
+      make_loc(params).id
+    end
+  end
+
+  def make_loc(params)
+    location = Location.new(name: params[:plan][:location])
+    if location.save
+      location
+    else
+      redirect_to new_plan_path
+    end
+  end
 end

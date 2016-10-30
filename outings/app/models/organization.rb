@@ -16,4 +16,14 @@ class Organization < ApplicationRecord
   validates :name, presence: true
   validates :name, uniqueness: true
 
+  def top_five
+    Organization.first.users.map(&:reviews).sort_by(&:count).reverse.first(5).map do |review|
+      review.first ? review.first.user.camel_case : "Empty spot"
+    end
+  end
+
+  def locations
+
+  end
+
 end

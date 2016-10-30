@@ -1,11 +1,15 @@
 <div class="container">
-  <%= button_to "Add Plans", new_plan_path, method: "get"%>
+  <%= button_to "Add Plans", new_plan_path, {method: "get"}%>
 </div>
 <div class="jumbotron">
-  <h1>Happening Today: </h1>
-  <% @organization.plans.each do |plan| %>
-    <% if plan.timing.strftime('%j') == Time.now.strftime('%j') %>
-       <%= button_to "#{plan.location.name} - #{plan.timing.hour} - #{plan.organizer.name} - #{plan.users.count} People", plan_path(plan), {method: "get", class: "well"} %>
+  <h1>Upcoming Plans: </h1>
+  <% current_user.plans.sort_by(&:timing).each do |plan| %>
+    <%= button_to plan.summary, plan_path(plan), {method: "get", class: "well"} %>
+  <% end %>
+  <h1>Available Plans: </h1>
+  <% @organization.plans.sort_by(&:timing).each do |plan| %>
+    <% if plan.front_page?(current_user)%>
+      <%= button_to plan.summary, plan_path(plan), {method: "get", class: "well"} %>
     <% end %>
   <% end %>
 </div>
