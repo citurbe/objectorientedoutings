@@ -1,4 +1,7 @@
 <h1><%= @location.name %></h1>
+<% if @location.time_of_day != nil %>
+<h4><%= @location.time_of_day %></h4>
+<% end %>
 
 <!-- review button to reviews#new, needs to pass location_id -->
 <% if @location.reviews.average(:score) %>

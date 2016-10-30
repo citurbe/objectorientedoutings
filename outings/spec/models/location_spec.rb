@@ -1,0 +1,27 @@
+require 'rails_helper'
+
+RSpec.describe Location, type: :model do
+  let!(:user) { User.create(name: 'bob', email: 'email@email', password: '123', password_confirmation: '123',phone: "9146935919", organization_id: org.id)}
+  let!(:org) { Organization.create(name: 'Google')}
+  let!(:chipotle) { Location.create(name: 'Chipotle')}
+  let!(:bagels) {Location.create(name: 'The Bagel Place')}
+  let!(:bar) {Location.create(name: 'A Bar')}
+  let!(:subway) {Location.create(name: "Subway'")}
+  let!(:gregorys) {Location.create(name: "Gregory's Coffee")}
+  let!(:plan1) { Plan.create(location_id: bagels.id, timing: '20120618 10:34:09 AM')}
+  let!(:plan2) { Plan.create(location_id: chipotle.id, timing: '20120618 02:34:09 PM')}
+  let!(:plan3) { Plan.create(location_id: bar.id, timing: '20120618 11:34:09 PM')}
+  let!(:plan4) { Plan.create(location_id: subway.id, timing: '20120618 11:34:09 PM')}
+  let!(:plan5) { Plan.create(location_id: subway.id, timing: '20120618 11:34:09 AM')}
+
+  describe '#time_of_day' do
+    it 'tells you when peple usually go to a place' do
+      expect(bagels.time_of_day).to eq("This seems to be a morning place")
+      expect(chipotle.time_of_day).to eq("This seems to be an afternoon place")
+      expect(bar.time_of_day).to eq("This seems to be an evening place")
+      expect(subway.time_of_day).to eq("People go here at all hours")
+    end
+  end
+
+
+end

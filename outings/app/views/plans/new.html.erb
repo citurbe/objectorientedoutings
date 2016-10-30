@@ -5,6 +5,10 @@
     <br>
     <h3>Make a new one: <%= f.text_field :location%></h3>
   <br>
+  <% if current_user.favorite_place != nil %>
+  <h3>Can't decide? Your current favorite place is: <%= current_user.favorite_place.name %></h3>
+  <% end %>
+  <br>
   <h2>When? </h2><%= f.datetime_local_field :timing%>
   <br>
   <%= f.submit "Create Plan" %>

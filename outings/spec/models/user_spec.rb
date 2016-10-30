@@ -43,6 +43,10 @@ RSpec.describe User, type: :model do
       Review.create(score: 1, user_id: user.id, location_id: bagels.id)
       expect(user.favorite_place.name).to eq ('Chipotle')
     end
+
+    it "returns nil when a user has not reviewed any restaurants" do
+      expect(user2.favorite_place).to eq (nil)
+    end
   end
 
 end

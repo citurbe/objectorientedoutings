@@ -36,18 +36,24 @@ class User < ApplicationRecord
   end
 
   def phone_number_format
-  nums = self.phone.scan(/([0-9])/).flatten.join
-  unless nums.length == 10 || nums.length == 0
-    self.errors[:phone] << "Phone number must be 10 digits exactly!"
+    if self.phone != nil
+      nums = self.phone.scan(/([0-9])/).flatten.join
+      unless nums.length == 10
+        self.errors[:phone] << "Phone number must be 10 digits exactly!"
+      end
+    end
   end
 
   def favorite_place
     all_reviews = self.reviews
     sorted_reviews = all_reviews.sort_by {|review| review.score}
     best_review = sorted_reviews.last
-  
-    return best_review.location
+    if best_review != nil
+      return best_review.location
+    else
+      return nil
+    end
   end
-end
+
 
 end
