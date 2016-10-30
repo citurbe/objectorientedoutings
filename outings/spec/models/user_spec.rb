@@ -26,4 +26,5 @@ RSpec.describe User, type: :model do
     it 'has a name' do
       expect(user.name).to eq('Bob')
     end
+  end
 end
