@@ -40,6 +40,14 @@ class User < ApplicationRecord
   unless nums.length == 10 || nums.length == 0
     self.errors[:phone] << "Phone number must be 10 digits exactly!"
   end
+
+  def favorite_place
+    all_reviews = self.reviews
+    sorted_reviews = all_reviews.sort_by {|review| review.score}
+    best_review = sorted_reviews.last
+  
+    return best_review.location
+  end
 end
 
 end

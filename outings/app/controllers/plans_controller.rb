@@ -67,6 +67,11 @@ class PlansController < ApplicationController
     redirect_to plan_path(params[:id])
   end
 
+  def go
+    Plan.find(params[:id]).time_to_go
+    redirect_to root_path
+  end
+
   private
 
   def plan_params(*args)

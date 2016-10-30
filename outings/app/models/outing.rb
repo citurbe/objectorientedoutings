@@ -12,5 +12,6 @@
 class Outing < ApplicationRecord
   belongs_to :plan
   belongs_to :user
+  validates :plan_id, uniqueness: {scope: :user_id, message: "you're already going!"}
 
 end

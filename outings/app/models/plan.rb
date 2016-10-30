@@ -20,5 +20,16 @@ class Plan < ApplicationRecord
 
   validates :location_id, presence: true
   validates :timing, presence: true
-  validates :user_id, uniqueness: true
+
+
+
+  def time_to_go
+    self.users.each do |user|
+      if user.name != self.organizer.name
+        message = "#{self.organizer.name} is ready to go to #{self.location.name}. Time to head out!"
+        PlanMailer.time_to_go(user, message).deliver
+      end
+    end
+  end
+
 end

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get '/logout', to: 'sessions#destroy'
   post '/outings', to: 'outings#create', as: 'create_outing'
   post '/plans/:id/leave', to: 'plans#leave', as: 'leave_plan'
+  post '/plans/:id/go', to: 'plans#go', as: 'go_plan'
 
   resources :locations
   resources :reviews

@@ -10,6 +10,7 @@
 <% if @plan.organizer_id == current_user.id %>
   <%= button_to "Edit Plan", edit_plan_path(@plan), method: 'get' %>
   <%= button_to "Cancel Plan", plan_path(@plan), method: 'delete' %>
+  <%= button_to "Let's Go!",  go_plan_path(@plan) %>
 <% elsif @plan.users.include?(current_user)%>
   <%= button_to "Leave Plan", leave_plan_path%>
 <% end %>
