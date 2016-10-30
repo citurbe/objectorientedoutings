@@ -1,3 +1,5 @@
+<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+
 <h1>Name: <%= @user.name %></h1>
 <h2>Email: <%= @user.email %></h2>
 <h2>Phone #: <%= @user.phone %></h2>
@@ -6,6 +8,10 @@
   <%= button_to "Edit", edit_user_path(@user), method: 'get' %>
 <% end %>
 <h2>Your Reviews:</h2>
+<!-- Chart of reviews -->
+<%= bar_chart @user.reviews.group(:score).order(score: :desc).count %>
+
+<!-- list of reviews -->
 <ul>
 <% @user.reviews.each do |review| %>
 <li><%= link_to review.location.name, review_path(review) %></li>

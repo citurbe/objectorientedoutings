@@ -1,9 +1,12 @@
+<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+
 <h1><%= @location.name %></h1>
 
 <!-- review button to reviews#new, needs to pass location_id -->
 <h4>Average Score: <%= @location.display_score %></h4>
 <%= button_to "Leave a Review!", new_review_path, {method:'get',params:{location_id: @location.id}} %>
 <br>
+<%= pie_chart @location.reviews.group(:score).count %>
 <% @location.reviews.each do |review| %>
 <li><%= link_to "#{review.location.name} Review by #{review.user.name}", review_path(review) %></li>
 <% end %>
