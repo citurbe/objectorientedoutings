@@ -28,10 +28,22 @@ class User < ApplicationRecord
 
 
   def phone_number_format
-  nums = self.phone.scan(/([0-9])/).flatten.join
-  unless nums.length == 10 || nums.length == 0
-    self.errors[:phone] << "Phone number must be 10 digits exactly!"
+    nums = self.phone.scan(/([0-9])/).flatten.join
+    unless nums.length == 10 || nums.length == 0
+      self.errors[:phone] << "Phone number must be 10 digits exactly!"
+    end
   end
-end
 
+  def camel_case
+    name = self.name.split.map do |word|
+      word = word.split("")
+      word.first.capitalize!
+      word.join('')
+    end
+    name.join(' ')
+  end
+
+  def conflict?(timing)
+    self.plans.map(&:timing).include?(timing)
+  end
 end
