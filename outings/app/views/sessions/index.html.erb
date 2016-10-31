@@ -1,15 +1,37 @@
 <div class="container">
-  <%= button_to "Add Plans", new_plan_path, {method: "get"}%>
-</div>
-<div class="jumbotron">
-  <h1>Upcoming Plans: </h1>
-  <% current_user.plans.sort_by(&:timing).each do |plan| %>
-    <%= button_to plan.summary, plan_path(plan), {method: "get", class: "well"} %>
-  <% end %>
-  <h1>Available Plans: </h1>
-  <% @organization.plans.sort_by(&:timing).each do |plan| %>
-    <% if plan.front_page?(current_user)%>
-      <%= button_to plan.summary, plan_path(plan), {method: "get", class: "well"} %>
-    <% end %>
-  <% end %>
+  <div class="row">
+    <div class="col-sm-6"
+      <ol><h1>Top Users:</h1>
+        <% @organization.top_users.each do |user| %>
+          <li><%= "#{user}" %></li>
+        <% end %>
+      </ol>
+    </div>
+    <div class="col-sm-6">
+      <ol><h1>Hot Locations:</h1>
+        <% @organization.top_locations.each do |location| %>
+          <li><%= link_to "#{location}", Location.find_by(name: location) %></li>
+        <% end %>
+      </ol>
+    </div>
+  </div>
+  <div class="jumbotron">
+    <%= button_to "Add Plans", new_plan_path, {method: "get", class: "plan"}%>
+    <div class="row">
+      <div class="col-sm-6">
+        <h1 style="text-align: center;">Upcoming: </h1>
+        <% current_user.plans.sort_by(&:timing).each do |plan| %>
+          <%= button_to plan.summary(current_user), plan_path(plan), {method: "get", class: "plan"} %>
+        <% end %>
+      </div>
+      <div class="col-sm-6">
+        <h1 style="text-align: center;">Available: </h1>
+        <% @organization.plans.sort_by(&:timing).each do |plan| %>
+          <% if plan.front_page?(current_user)%>
+            <%= button_to plan.summary, plan_path(plan), {method: "get", class: "plan"} %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

@@ -30,8 +30,14 @@ class Plan < ApplicationRecord
     end
   end
 
-  def summary
-    "#{self.organizer.camel_case} is going to #{self.location.name} with #{self.users.count - 1} other people on #{self.day} at #{self.timing.strftime('%r')}"
+  def summary(user = nil)
+    "#{self.current?(user)} going to #{self.location.name} with #{self.users.count - 1} other people on #{self.day} at #{self.timing.strftime('%r')}"
+  end
+
+  def current?(user)
+    if !user then "#{self.organizer.camel_case} is"
+    else "I am "
+    end
   end
 
   def day
