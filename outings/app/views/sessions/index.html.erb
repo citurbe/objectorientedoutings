@@ -1,5 +1,36 @@
+<style>
+body{
+    background-color: #525252;
+}
+
+h4 {
+ border:0 solid #fff;
+ border-bottom-width:1px;
+ padding-bottom:10px;
+ text-align: center;
+}
+
+.form-control {
+  border-radius: 10px;
+}
+.jumbotron{
+  background-color: #EDEDED;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 15px;
+  border-color:#d2d2d2;
+  border-width: 5px;
+  box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+</style>
+
+
 <div class="container">
-  <div class="row">
+  <div class="row jumbotron">
     <div class="col-sm-6">
       <ol><h1>Top Users:</h1>
         <% @organization.top_users.each do |user| %>

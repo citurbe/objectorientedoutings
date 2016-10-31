@@ -28,6 +28,9 @@ h4 {
   	background: rgba(255, 255, 255, 0.8);
 }
 
+.btn-md {
+  width: 100%;
+}
 
 </style>
 
@@ -37,7 +40,7 @@ h4 {
 
 <div class="container">
     <div class="row centered-form">
-      <h4 class="title">Please log up for OOO</h4>
+      <h4>Please log up for OOO</h4>
       <div class="col-md-offset-5 col-md-6">
       </div>
 
@@ -97,13 +100,9 @@ h4 {
             </div>
 
             <div class="row">
-                <div class="col-md-offset-5 col-md-3">
-                    <div class="wrapper">
-                      <span class="group-btn">
-                        <%=f.submit "Logup", class: "btn btn-primary btn-md"%>
-                      </span>
-                    </div>
-                </div>
+              <div class="col-xs-4 col-sm-4 col-md-4"></div>"
+            <div class="col-xs-4 col-sm-4 col-md-4">
+              <%= f.submit "Logup", class: "btn btn-primary btn-md"%>
             </div>
 
     <% end %>
