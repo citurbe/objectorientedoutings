@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
 
+  skip_before_action :require_login, only: [:index,:new, :create]
+
   def index
     @organization = Organization.first
   end

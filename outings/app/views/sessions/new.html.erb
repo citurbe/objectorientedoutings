@@ -1,3 +1,7 @@
+<% if flash[:alert] %>
+  <p><%= flash[:alert] %></p>
+<% end %>
+
 <%= form_tag sessions_path do %>
   <%= label_tag :email %>
   <%= text_field_tag :email %>
@@ -7,3 +11,5 @@
 <br>
   <%= submit_tag "Login" %>
 <% end %>
+<br>
+<%= button_to "Logup if you don't have an account!", logup_path, method:'get'%>
