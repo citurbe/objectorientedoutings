@@ -46,7 +46,7 @@ class Organization < ApplicationRecord
   end
 
   def top_locations
-    plan_data.merge(review_data){|key, rev, plan| rev + plan}.keys.first(5)
+    plan_data.merge(review_data){|key, rev, plan| rev + plan}.sort_by{|k, v| v}.reverse.map(&:first).first(5)
   end
 
   def plan_data
