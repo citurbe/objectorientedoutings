@@ -23,5 +23,5 @@
   <% end %></ul>
 <% end %>
 <% if @location.reviews.count > 0 %>
-  <%= pie_chart @location.reviews.group(:score).count %>
+  <%= pie_chart @chartdata, @library %>
 <% end %>

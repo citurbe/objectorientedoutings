@@ -11,11 +11,12 @@
 <% end %>
 <h2>Your Reviews:</h2>
 <!-- Chart of reviews -->
-<%= bar_chart @user.reviews.group(:score).order(score: :desc).count %>
+<h3><%= "You have no reviews yet! Why no leave one at a location above?" if @user.reviews.empty? %></h3>
+<%= bar_chart @chartdata, @library unless @user.reviews.empty?%>
 
 <!-- list of reviews -->
 <ul>
 <% @user.reviews.each do |review| %>
 <li><%= link_to review.location.name, review_path(review) %></li>
-<% end %>
+<% end unless @user.reviews.empty?%>
 </ul>

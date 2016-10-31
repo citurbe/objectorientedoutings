@@ -4,6 +4,13 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @chartdata = @user.reviews.group(:score).order(score: :desc).count.map do |key,val|
+      ["Rated #{key}",val]
+    end
+    @library = {library: {
+      width:600,
+      hAxis: {format: '###'}
+      }}
   end
 
   def new
