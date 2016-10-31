@@ -12,7 +12,8 @@
 <h2>Your Reviews:</h2>
 <!-- Chart of reviews -->
 <h3><%= "You have no reviews yet! Why no leave one at a location above?" if @user.reviews.empty? %></h3>
-<%= bar_chart @chartdata, @library unless @user.reviews.empty?%>
+<!-- <%= bar_chart @bar_chart_data, @bar_library unless @user.reviews.empty?%> -->
+<%= line_chart @plan_chart_data, @plan_chart_library %>
 
 <!-- list of reviews -->
 <ul>
