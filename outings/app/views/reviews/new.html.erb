@@ -1,3 +1,6 @@
+<% if flash[:notice] %>
+  <%= flash[:notice] %>
+<% end %>
 <h1>Leave a review for <%= @location.name %>!</h1>
 <%= form_for @review do |f| %>
 

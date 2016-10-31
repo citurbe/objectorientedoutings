@@ -1,3 +1,6 @@
+<% if flash[:notice] %>
+  <%= flash[:notice] %>
+<% end %>
 <h1>Edit Plan: </h1>
 <%= form_for @plan do |f| %>
   <h2>Where? </h2>

@@ -5,7 +5,12 @@ class PlansController < ApplicationController
   end
 
   def create
-    redirect_to new_plan_path if params[:plan][:timing] == "" || (params[:plan][:location_id] == "" && params[:plan][:location] == "")
+    # byebug
+
+    if params[:plan][:timing] == "" || (params[:plan][:location_id] == "" && params[:plan][:location] == "")
+      flash[:notice] = "Missing required information"
+      return redirect_to new_plan_path
+    end
     plan_maker = PlanMaker.new(params:params[:plan], current_user: current_user)
     redirect_to plan_path plan_maker.run
   end
@@ -22,7 +27,7 @@ class PlansController < ApplicationController
     @plan = Plan.find(params[:id])
     @plan.update_attributes(location_id: get_loc(params), timing: params[:plan][:timing])
     if !@plan.errors.messages.empty?
-      flash[:notice] = @plan.errors.messages
+      flash[:notice] = @plan.errors.full_messages
       redirect_to edit_plan_path(@plan)
     else
       redirect_to plan_path(@plan)

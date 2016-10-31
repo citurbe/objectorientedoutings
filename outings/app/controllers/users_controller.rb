@@ -24,7 +24,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to user_path(@user)
     else
-      flash[:notice] = @user.errors.messages
+      flash[:notice] = @user.errors.full_messages
       redirect_back fallback_location: "/"
     end
   end

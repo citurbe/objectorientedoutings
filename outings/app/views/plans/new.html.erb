@@ -1,3 +1,17 @@
+<style>
+.center {
+  width: 400px;
+  margin:10px;
+  text-align: left;
+  padding: 5px;
+  outline-color: red;
+  outline-width: 5px;
+  outline-style: solid;
+}
+</style>
+
+
+
 <h1>Make a Plan: </h1>
 <%= form_for @plan do |f| %>
   <h2>Where? </h2>
@@ -13,4 +27,9 @@
   <br>
   <%= f.submit "Create Plan" %>
 
+<% end %>
+<% if flash[:notice] %>
+<div class="row center">
+    • <%= flash[:notice] %><br>
+  </div>
 <% end %>

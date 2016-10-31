@@ -28,6 +28,17 @@ h4 {
   background: rgba(255, 255, 255, 0.8);
 }
 
+.center {
+  width: 400px;
+  margin:10px auto;
+  text-align: center;
+  padding: 5px;
+  outline-color: red;
+  outline-width: 5px;
+  outline-style: solid;
+
+}
+
 .btn-md{
   width: 100%;
 }
@@ -35,9 +46,7 @@ h4 {
 
 </style>
 
-<% if flash[:notice] %>
-  <%= flash[:notice] %>
-<% end %>
+
 
 <div class="container">
     <div class="row centered-form">
@@ -45,13 +54,13 @@ h4 {
       <div class="col-md-offset-5 col-md-6">
       </div>
 
-      <%= form_tag new_session_path do %>
+      <%= form_tag sessions_path do %>
 	    			<div class="row">
               <div class="col-xs-2 col-sm-2 col-md-2"></div>
 	    				<div class="col-xs-8 col-sm-8 col-md-8">
 	    					<div class="form-group">
-                  <%= label_tag :name %>
-                  <%= text_field_tag :name, "", class: "form-control input-sm"%>
+                  <%= label_tag :email %>
+                  <%= text_field_tag :email, "", class: "form-control input-sm"%>
 	    					</div>
 	    				</div>
             </div>
@@ -59,8 +68,8 @@ h4 {
               <div class="col-xs-2 col-sm-2 col-md-2"></div>
 	    				<div class="col-xs-8 col-sm-8 col-md-8">
                 <div class="form-group">
-                  <%= label_tag :email %>
-                  <%= email_field_tag :email, "", class: "form-control input-sm" %>
+                  <%= label_tag :password %>
+                  <%= password_field_tag :password, "", class: "form-control input-sm" %>
 			    			</div>
 	    				</div>
             </div>
@@ -70,6 +79,13 @@ h4 {
               <%= submit_tag "Login", class: "btn btn-primary btn-md"%>
             </div>
           </div>
+
+      <% end %>
+
+      <% if flash[:notice] %>
+      <div class="row center">
+          • <%= flash[:notice] %><br>
+        </div>
       <% end %>
 
   </div>

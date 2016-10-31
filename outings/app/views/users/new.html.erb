@@ -32,11 +32,20 @@ h4 {
   width: 100%;
 }
 
+.center {
+  width: 400px;
+  margin:10px auto;
+  text-align: center;
+  padding: 5px;
+  outline-color: red;
+  outline-width: 5px;
+  outline-style: solid;
+
+}
+
 </style>
 
-<% if flash[:notice] %>
-  <%= flash[:notice] %>
-<% end %>
+
 
 <div class="container">
     <div class="row centered-form">
@@ -100,10 +109,19 @@ h4 {
             </div>
 
             <div class="row">
-              <div class="col-xs-4 col-sm-4 col-md-4"></div>"
+              <div class="col-xs-4 col-sm-4 col-md-4"></div>
             <div class="col-xs-4 col-sm-4 col-md-4">
               <%= f.submit "Logup", class: "btn btn-primary btn-md"%>
+              </div>
             </div>
+              <div class="row center">
+              <% if flash[:notice] %>
+                <% flash[:notice].each do |error| %>
+                  • <%= error %><br>
+                <% end %>
+              <% end %>
+          </div>
+
 
     <% end %>
 
