@@ -15,10 +15,19 @@ RSpec.describe Location, type: :model do
   let!(:plan5) { Plan.create(location_id: subway.id, timing: '20120618 11:34:09 AM')}
 
   describe '#time_of_day' do
-    it 'tells you when peple usually go to a place' do
+    it 'correctly identifies a morning place' do
       expect(bagels.time_of_day).to eq("This seems to be a morning place")
+    end
+
+    it 'correctly identifies an afternoon place' do
       expect(chipotle.time_of_day).to eq("This seems to be an afternoon place")
+    end
+
+    it 'correctly identifies an evening place' do
       expect(bar.time_of_day).to eq("This seems to be an evening place")
+    end
+
+    it 'correctly identifies an ambiguous place' do
       expect(subway.time_of_day).to eq("People go here at all hours")
     end
   end
