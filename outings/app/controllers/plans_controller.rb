@@ -5,17 +5,9 @@ class PlansController < ApplicationController
   end
 
   def create
-    return redirect_to new_plan_path if params[:plan][:timing] == "" || (params[:plan][:location_id] == "" && params[:plan][:location] == "")
-
-    @plan = Plan.new(plan_params(:timing))
-    @plan.location_id, @plan.organizer_id, @plan.organization_id = @plan.get_loc(params), current_user.id, current_user.organization_id
-    if @plan.save
-      Outing.create(user_id: current_user.id, plan_id: @plan.id)
-      redirect_to plan_path(@plan)
-    else
-      flash[:notice] = @plan.errors.messages
-      redirect_to new_plan_path
-    end
+    redirect_to new_plan_path if params[:plan][:timing] == "" || (params[:plan][:location_id] == "" && params[:plan][:location] == "")
+    plan_maker = PlanMaker.new(params:params[:plan], current_user: current_user)
+    redirect_to plan_path plan_maker.run
   end
 
   def show
