@@ -4,13 +4,15 @@
     <li><%= user.name %><br></li>
   <% end %>
 </ul>
-<% if !@plan.users.include?(current_user) && !current_user.conflict?(@plan.timing)%>
-  <%= button_to "I'm in", {action: "create", controller: "outings", id: @plan.id}%>
-<% end %>
-<% if @plan.organizer_id == current_user.id %>
-  <%= button_to "Edit Plan", edit_plan_path(@plan), method: 'get' %>
-  <%= button_to "Cancel Plan", plan_path(@plan), method: 'delete' %>
-  <%= button_to "Let's Go!",  go_plan_path(@plan) %>
-<% elsif @plan.users.include?(current_user)%>
-  <%= button_to "Leave Plan", leave_plan_path%>
+<% if current_user %>
+  <% if !@plan.users.include?(current_user) && !current_user.conflict?(@plan.timing)%>
+    <%= button_to "I'm in", {action: "create", controller: "outings", id: @plan.id}%>
+  <% end %>
+  <% if @plan.organizer_id == current_user.id %>
+    <%= button_to "Edit Plan", edit_plan_path(@plan), method: 'get' %>
+    <%= button_to "Cancel Plan", plan_path(@plan), method: 'delete' %>
+    <%= button_to "Let's Go!",  go_plan_path(@plan) %>
+  <% elsif @plan.users.include?(current_user)%>
+    <%= button_to "Leave Plan", leave_plan_path%>
+  <% end %>
 <% end %>
