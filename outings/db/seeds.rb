@@ -23,5 +23,5 @@ end
 end
 
 20.times do
-  Review.create(user_id: User.all.sample.id, location_id: Location.all.sample.id, score: rand(5), comment: Faker::Lorem.sentence)
+  Review.create(user_id: User.all.sample.id, location_id: Location.all.sample.id, score: rand(1..5), comment: Faker::Lorem.sentence)
 end
