@@ -2,14 +2,33 @@
 body{
     background-color: #525252;
 }
-.centered-form{
-	margin-top: 60px;
+
+h4 {
+ border:0 solid #fff;
+ border-bottom-width:1px;
+ padding-bottom:10px;
+ text-align: center;
 }
 
-.centered-form .panel{
-	background: rgba(255, 255, 255, 0.8);
-	box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+.form-control {
+    border-radius: 10px;
 }
+.centered-form{
+  background-color: #EDEDED;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 15px;
+  border-color:#d2d2d2;
+  border-width: 5px;
+  width: 50%;
+  margin: 0 auto;
+  box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+  	background: rgba(255, 255, 255, 0.8);
+}
+
+
 </style>
 
 <% if flash[:notice] %>
@@ -18,40 +37,41 @@ body{
 
 <div class="container">
         <div class="row centered-form">
-        <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
-        	<div class="panel panel-default">
-        		<div class="panel-heading">
-			    		<h3 class="panel-title">Please log up for OOO <small>It's free!</small></h3>
+          <h4 class="title">Please log up for OOO</h4>
+          <div class="col-md-offset-5 col-md-6">
+
+
 			 			</div>
-			 			<div class="panel-body">
+
               <%= form_for @user do |f| %>
 
 			    			<div class="row">
 			    				<div class="col-xs-6 col-sm-6 col-md-6">
 			    					<div class="form-group">
                       <%= f.label :name %>
-                      <%= f.text_field :name, html: {class: "form-control input-sm"}%>
+                      <%= f.text_field :name, class: "form-control input-sm"%>
 			    					</div>
 			    				</div>
 			    				<div class="col-xs-6 col-sm-6 col-md-6">
                     <div class="form-group">
                       <%= f.label :email %>
-                      <%= f.email_field :email, html: {class: "form-control input-sm" }%>
+                      <%= f.email_field :email, class: "form-control input-sm" %>
     			    			</div>
 			    				</div>
-			    			</div>
+                </div>
+
 
           <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6">
                 <div class="form-group">
                   <%= f.label :phone %>
-                  <%= f.text_field :phone, html: {class: "form-control input-sm"} %>
+                  <%= f.text_field :phone, class: "form-control input-sm" %>
                 </div>
               </div>
                 <div class="col-xs-6 col-sm-6 col-md-6">
                 <div class="form-group">
                   <%= f.label :user_name %>
-                  <%= f.text_field :user_name, html: {class: "form-control input-sm"} %>
+                  <%= f.text_field :user_name, class: "form-control input-sm" %>
                 </div>
               </div>
             </div>
@@ -61,13 +81,13 @@ body{
 			    				<div class="col-xs-6 col-sm-6 col-md-6">
 			    					<div class="form-group">
                       <%= f.label :password %>
-                      <%= f.password_field :password, html:{class: "form-control input-sm"}%>
+                      <%= f.password_field :password, class: "form-control input-sm"%>
 			    					</div>
 			    				</div>
 			    				<div class="col-xs-6 col-sm-6 col-md-6">
 			    					<div class="form-group">
                       <%= f.label "Confirm" %>
-                      <%= f.password_field :password_confirmation, html: {class: "form-control input-sm"}%>
+                      <%= f.password_field :password_confirmation, class: "form-control input-sm"%>
 			    					</div>
 			    				</div>
 			    			</div>
@@ -76,13 +96,13 @@ body{
                   <div class="col-xs-6 col-sm-6 col-md-6">
                   <div class="form-group">
                     <%= f.label "Organization" %>
-                    <%= f.select :organization_id, @organizations.collect{|org| [org.name, org.id]}, include_blank: true%>
+                    <%= f.select :organization_id, @organizations.collect{|org| [org.name, org.id]}, include_blank: true, class: "form-control input-sm"%>
                   </div>
                 </div>
                 </div>
 
 
-			    			<%=f.submit "Logup", html: {class: "btn btn-primary btn-md"}%>
+			    			<%=f.submit "Logup", {class: "btn btn-primary btn-md"}%>
 			    		<% end %>
 
 			    	</div>
