@@ -3,7 +3,7 @@
     <div class="col-sm-6"
       <ol><h1>Top Users:</h1>
         <% @organization.top_users.each do |user| %>
-          <li><%= "#{user}" %></li>
+          <li><%= link_to "#{user}", User.find_by(name: user) %></li>
         <% end %>
       </ol>
     </div>
@@ -20,15 +20,23 @@
     <div class="row">
       <div class="col-sm-6">
         <h1 style="text-align: center;">Upcoming: </h1>
-        <% current_user.plans.sort_by(&:timing).each do |plan| %>
-          <%= button_to plan.summary(current_user), plan_path(plan), {method: "get", class: "plan"} %>
+        <% if current_user %>
+          <% current_user.plans.sort_by(&:timing).each do |plan| %>
+            <%= button_to plan.summary(current_user), plan_path(plan), {method: "get", class: "plan"} %>
+          <% end %>
+        <% else %>
+          Not logged in!
         <% end %>
       </div>
       <div class="col-sm-6">
         <h1 style="text-align: center;">Available: </h1>
         <% @organization.plans.sort_by(&:timing).each do |plan| %>
-          <% if plan.front_page?(current_user)%>
-            <%= button_to plan.summary, plan_path(plan), {method: "get", class: "plan"} %>
+          <% if current_user %>
+            <% if plan.front_page?(current_user) %>
+              <%= button_to plan.summary, plan_path(plan), {method: "get", class: "plan"} %>
+            <% end %>
+          <% else %>
+              <%= button_to plan.summary, plan_path(plan), {method: "get", class: "plan"} %>
           <% end %>
         <% end %>
       </div>

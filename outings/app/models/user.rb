@@ -31,8 +31,10 @@ class User < ApplicationRecord
   end
 
   def display_phone
-    digits = self.phone_digits_only
-    formatted = "(#{digits[0..2]}) #{digits[3..5]} - #{digits[6..9]}"
+    if phone != nil
+      digits = self.phone_digits_only
+      formatted = "(#{digits[0..2]}) #{digits[3..5]} - #{digits[6..9]}"
+    end
   end
 
   def phone_number_format
@@ -56,12 +58,16 @@ class User < ApplicationRecord
   end
 
   def camel_case
-    name = self.name.split.map do |word|
-      word = word.split("")
-      word.first.capitalize!
-      word.join('')
+    if name != nil
+      name = self.name.split.map do |word|
+        word = word.split("")
+        word.first.capitalize!
+        word.join('')
+      end
+      name.join(' ')
+    else
+      return nil
     end
-    name.join(' ')
   end
 
   def conflict?(timing)

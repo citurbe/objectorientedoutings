@@ -8,11 +8,20 @@
 <% if @location.reviews.average(:score) %>
   <h4>Average Score: <%= @location.reviews.average(:score) %>
 <% else %>
-   This location has no reviews
+   <h3>This location has no reviews</h3>
 <% end %>
-<%= button_to "Leave a Review!", new_review_path, {method:'get',params:{location_id: @location.id}} %>
-<br>
-<%= pie_chart @location.reviews.group(:score).count %>
+<%= button_to "Leave a Review!", new_review_path, {method:'get', class: 'plan', params:{location_id: @location.id}} %>
 <% @location.reviews.each do |review| %>
   <li><%= link_to "#{review.location.name} Review by #{review.user.name}", review_path(review) %></li>
+<% end %>
+<h1>Upcoming Events: </h1>
+<% if @location.plans.count == 0 %>
+  No plans here at the moment.
+<% else %>
+  <ul><% @location.plans.each do |plan| %>
+    <li><%= plan.summary %></li>
+  <% end %></ul>
+<% end %>
+<% if @location.reviews.count > 0 %>
+  <%= pie_chart @location.reviews.group(:score).count %>
 <% end %>

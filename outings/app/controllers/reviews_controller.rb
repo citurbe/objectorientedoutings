@@ -7,12 +7,12 @@ class ReviewsController < ApplicationController
 
   def create
     @review = Review.new(review_params)
-    if @review.valid?
-      @review.save
+    if @review.save
       redirect_to location_path(params[:review][:location_id])
     else
       flash[:location_id]=params[:review][:location_id]
       flash[:comment]=params[:review][:comment]
+      flash[:notice] = @review.errors.messages
       redirect_to new_review_path
     end
   end
@@ -28,10 +28,10 @@ class ReviewsController < ApplicationController
   def update
     @review = Review.find(params[:id])
     @review.assign_attributes(review_params)
-    if @review.valid?
-      @review.save
+    if @review.save
       redirect_to review_path(@review)
     else
+      flash[:notice] = @review.errors.messages
       redirect_to edit_review_path(@review)
     end
   end

@@ -35,7 +35,12 @@ class Plan < ApplicationRecord
   end
 
   def current?(user)
-    if !user then "#{self.organizer.camel_case} is"
+    if !user
+      if self.organizer.name
+        "#{self.organizer.camel_case} is"
+      else
+        "#{self.organizer.email} is"
+      end
     else "I am "
     end
   end
@@ -47,7 +52,7 @@ class Plan < ApplicationRecord
   def front_page?(current_user)
     self.timing.strftime('%j').to_i >= Time.now.strftime('%j').to_i &&
        self.timing.strftime('%j').to_i <= Time.now.strftime('%j').to_i + 3 &&
-       !current_user.plans.include?(self)
+       (!current_user.plans.include?(self) || current_user == nil)
   end
 
   def get_loc(params)

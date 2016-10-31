@@ -13,6 +13,7 @@ class PlansController < ApplicationController
       Outing.create(user_id: current_user.id, plan_id: @plan.id)
       redirect_to plan_path(@plan)
     else
+      flash[:notice] = @plan.errors.messages
       redirect_to new_plan_path
     end
   end

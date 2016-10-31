@@ -10,13 +10,15 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params(:name, :email, :password, :password_confirmation, :phone, :user_name, :organization_id))
+  #  byebug
+    present_params = params[:user].select{|k, v| params[:user][k] != ""}
+    @user = User.new(user_params(present_params.keys))
   #  byebug
     if params[:user][:password] == params[:user][:password_confirmation] && @user.save
       session[:user_id] = @user.id
       redirect_to user_path(@user)
     else
-      flash[:notice] = "Invalid logup data"
+      flash[:notice] = @user.errors.messages
       redirect_back fallback_location: "/"
     end
   end
