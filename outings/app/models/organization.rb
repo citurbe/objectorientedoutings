@@ -18,7 +18,7 @@ class Organization < ApplicationRecord
   validates :name, uniqueness: true
 
   def top_users
-    user_plans.merge(user_reviews){|key, rev, plan| rev + plan}.keys.first(5)
+    user_plans.merge(user_reviews){|key, rev, plan| rev + plan}.sort_by{|k, v| v}.reverse.map(&:first).first(5)
   end
 
   def user_plans
@@ -57,10 +57,15 @@ class Organization < ApplicationRecord
   end
 
   def review_data
-    viable_reviews.each_with_object({}) do |loc, hash|
-      name = Location.find(loc.first.location_id).name
-      if !hash[name] then hash[name] = 0 end
-      hash[name] += 1
+    viable_reviews.each_with_object({}) do |review, hash|
+      if review.present?
+        name = Location.find(review.first.location_id).name
+        if !hash[name] then hash[name] = 0 end
+        hash[name] += review.count
+      else
+        hash[Location.find(hash.length + 1).name] = 0
+      end
+  #    byebug
     end
   end
 

@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-6"
+    <div class="col-sm-6">
       <ol><h1>Top Users:</h1>
         <% @organization.top_users.each do |user| %>
           <li><%= link_to "#{user}", User.find_by(name: user) %></li>
