@@ -4,35 +4,10 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-
-
-    @bar_chart_data = @user.reviews.group(:score).order(score: :desc).count.map do |key,val|
-      ["Rated #{key}",val]
-    end
-    @bar_library = {library: {
-      width:600,
-      hAxis: {format: '###'}
-      }}
-
-
-    @plan_chart_data = @user.plans.group_by_day(:timing).count.map do |key,val|
-      [key,val] if key >= 5.days.ago
-    end.compact!
-    @plan_chart_library = {library:{
-      width:600,
-      crosshair: {
-        trigger: 'focus',
-        orientation: 'both',
-        focused: { color: '#3bc', opacity: 0.8 }
-      },
-      vAxis:{
-        gridlines: {count:0}
-      },
-      hAxis:{
-        format:'MMM d',
-        gridlines:{count:6}
-      }
-    }}
+    # @review_chart_data = @user.review_chart_data
+    # @bar_chart_library = @user.review_chart_library
+    @plan_chart_data = @user.plan_chart_data
+    @line_chart_library = @user.line_chart_library
   end
 
   def new

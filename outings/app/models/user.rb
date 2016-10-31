@@ -73,4 +73,45 @@ class User < ApplicationRecord
   def conflict?(timing)
     self.plans.map(&:timing).include?(timing)
   end
+
+  def review_chart_data
+    self.reviews.group(:score).count.map do |key,val|
+      ["Rated #{key}",val]
+    end.compact
+  end
+
+  def plan_chart_data
+    self.plans.group_by_day(:timing).count.map do |key,val|
+      [key,val] if key >= 5.days.ago
+    end.compact
+  end
+
+  def bar_chart_library
+    {
+      library: {
+        width:600,
+        hAxis: {format: '###'}
+      }
+    }
+  end
+
+  def line_chart_library
+    {
+      library:{
+        width:600,
+        crosshair: {
+          trigger: 'focus',
+          orientation: 'both',
+          focused: { color: '#3bc', opacity: 0.8 }
+        },
+        vAxis:{
+          gridlines: {count:0}
+        },
+        hAxis:{
+          format:'MMM d',
+          gridlines:{count:6}
+        }
+      }
+    }
+  end
 end

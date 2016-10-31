@@ -23,6 +23,6 @@
   <% end %></ul>
 <% end %>
 <% if @location.reviews.count > 0 %>
-  <!-- <%= pie_chart @pie_chart_data, @pie_chart_library %> -->
-  <%= column_chart @pie_chart_data, @column_chart_library %>
+  <!-- <%= pie_chart @review_chart_data, @pie_chart_library %> -->
+  <%= column_chart @review_chart_data, @column_chart_library %>
 <% end %>

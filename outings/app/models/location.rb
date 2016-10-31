@@ -60,5 +60,35 @@ class Location < ApplicationRecord
     return "People go here at all hours"
     end
 
+  def reviews_chart_data
+    self.reviews.group(:score).count.map do |key,val|
+      ["Rated #{key}",val]
+    end
+  end
+
+  def pie_chart_library
+    {
+      library:{
+        pieSliceText: 'label',
+        width:600,
+        tooltip:{
+          text:'value',
+          ignoreBounds: true
+        },
+        legend: 'none'
+      }
+    }
+  end
+
+  def column_chart_library
+    {
+      library:{
+        width:600,
+        vAxis:{
+          gridlines: {count:0}
+        }
+      }
+    }
+  end
 
 end

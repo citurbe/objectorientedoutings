@@ -3,24 +3,9 @@ class LocationsController < ApplicationController
   def show
     @location = Location.find(params[:id])
 
-    @pie_chart_data = @location.reviews.group(:score).count.map do |key,val|
-      ["Rated #{key}",val]
-    end
-    @pie_chart_library = {library:{
-      pieSliceText: 'label',
-      width:600,
-      tooltip:{
-        text:'value',
-        ignoreBounds: true
-      },
-      legend: 'none'
-      }}
+    @review_chart_data = @location.reviews_chart_data
+    @pie_chart_library = @location.pie_chart_library
 
-      @column_chart_library = {library:{
-        width:600,
-        vAxis:{
-          gridlines: {count:0}
-        }
-        }}
+    @column_chart_library = @location.column_chart_library
   end
 end
