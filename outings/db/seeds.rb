@@ -18,7 +18,7 @@ end
 end
 
 10.times do
-  Plan.create(organizer_id:User.all.sample.id, location_id: Location.all.sample.id, timing: Time.at((Time.now.to_f - (Time.now + 500000).to_f)*rand + (Time.now + 500000).to_f), organization_id: Organization.first.id)
+  Plan.create(organizer_id:User.all.sample.id, location_id: Location.all.sample.id, timing: Time.at((Time.now.to_f - (Time.now + 7*24*60*60).to_f)*rand + (Time.now + 7*24*60*60).to_f), organization_id: Organization.first.id)
   Outing.create(plan_id: Plan.last.id, user_id: Plan.last.organizer_id)
 end
 

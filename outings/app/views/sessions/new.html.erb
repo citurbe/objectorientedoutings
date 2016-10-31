@@ -1,31 +1,6 @@
-<% if flash[:alert] %>
-  <p><%= flash[:alert] %></p>
-<% end %>
 <style>
-
-
-body {
-  background-color:#525252;
-  -webkit-font-smoothing: antialiased;
-  font: normal 14px Roboto,arial,sans-serif;
-}
-
-.container {
-    padding: 25px;
-    position: fixed;
-
-}
-
-.form-login {
-    background-color: #EDEDED;
-    padding-top: 10px;
-    padding-bottom: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-    border-radius: 15px;
-    border-color:#d2d2d2;
-    border-width: 5px;
-    box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+body{
+    background-color: #525252;
 }
 
 h4 {
@@ -36,37 +11,66 @@ h4 {
 }
 
 .form-control {
-    border-radius: 10px;
+  border-radius: 10px;
+}
+.centered-form{
+  background-color: #EDEDED;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 15px;
+  border-color:#d2d2d2;
+  border-width: 5px;
+  width: 50%;
+  margin: 0 auto;
+  box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+  background: rgba(255, 255, 255, 0.8);
 }
 
-.wrapper {
-    text-align: center;
+.btn-md{
+  width: 100%;
 }
+
+
 </style>
 
-<div class="container">
-  <%= form_tag sessions_path do %>
-    <div class="row">
-        <div class="col-md-offset-5 col-md-3">
-            <div class="form-login">
-            <h4>Welcome back.</h4>
-            <%= label_tag :email %>
-            <%= text_field_tag :email, "", class: "form-control input-sm chat-input" %>
-            </br>
-            <%= label_tag :password %>
-            <%= password_field_tag :password, "", class:"form-control input-sm chat-input" %>
-            </br>
-            <div class="wrapper">
-            <span class="group-btn">
-
-              <%= submit_tag "Login", class:"btn btn-primary btn-md" %>
+<% if flash[:notice] %>
+  <%= flash[:notice] %>
 <% end %>
 
+<div class="container">
+    <div class="row centered-form">
+      <h4>Please log in for OOO</h4>
+      <div class="col-md-offset-5 col-md-6">
+      </div>
 
-            </span>
+      <%= form_tag new_session_path do %>
+	    			<div class="row">
+              <div class="col-xs-2 col-sm-2 col-md-2"></div>
+	    				<div class="col-xs-8 col-sm-8 col-md-8">
+	    					<div class="form-group">
+                  <%= label_tag :name %>
+                  <%= text_field_tag :name, "", class: "form-control input-sm"%>
+	    					</div>
+	    				</div>
             </div>
+            <div class="row">
+              <div class="col-xs-2 col-sm-2 col-md-2"></div>
+	    				<div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="form-group">
+                  <%= label_tag :email %>
+                  <%= email_field_tag :email, "", class: "form-control input-sm" %>
+			    			</div>
+	    				</div>
             </div>
-        </div>
-    </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-4 col-md-4"></div>"
+            <div class="col-xs-4 col-sm-4 col-md-4">
+              <%= submit_tag "Login", class: "btn btn-primary btn-md"%>
+            </div>
+          </div>
+      <% end %>
 
+  </div>
 </div>
