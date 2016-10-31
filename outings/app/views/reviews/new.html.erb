@@ -1,6 +1,16 @@
-<% if flash[:notice] %>
-  <%= flash[:notice] %>
-<% end %>
+<style>
+.left {
+  width: 400px;
+  margin:10px;
+  text-align: left;
+  padding: 5px;
+  outline-color: red;
+  outline-width: 5px;
+  outline-style: solid;
+}
+</style>
+
+
 <h1>Leave a review for <%= @location.name %>!</h1>
 <%= form_for @review do |f| %>
 
@@ -29,4 +39,10 @@
   <%= f.hidden_field :user_id, {value:session[:user_id]} %>
 
   <%= f.submit "Create Reviews" %>
+<% end %>
+
+<% if flash[:notice] %>
+<div class="row left">
+    • <%= flash[:notice] %><br>
+  </div>
 <% end %>

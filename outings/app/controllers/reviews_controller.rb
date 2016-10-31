@@ -12,7 +12,7 @@ class ReviewsController < ApplicationController
     else
       flash[:location_id]=params[:review][:location_id]
       flash[:comment]=params[:review][:comment]
-      flash[:notice] = @review.errors.messages
+      flash[:notice] = @review.errors.full_messages.first
       redirect_to new_review_path
     end
   end
