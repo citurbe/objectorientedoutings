@@ -1,15 +1,72 @@
 <% if flash[:alert] %>
   <p><%= flash[:alert] %></p>
 <% end %>
+<style>
 
-<%= form_tag sessions_path do %>
-  <%= label_tag :email %>
-  <%= text_field_tag :email %>
-<br>
-  <%= label_tag :password %>
-  <%= password_field_tag :password %>
-<br>
-  <%= submit_tag "Login" %>
+
+body {
+  background-color:#525252;
+  -webkit-font-smoothing: antialiased;
+  font: normal 14px Roboto,arial,sans-serif;
+}
+
+.container {
+    padding: 25px;
+    position: fixed;
+
+}
+
+.form-login {
+    background-color: #EDEDED;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 15px;
+    border-color:#d2d2d2;
+    border-width: 5px;
+    box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+}
+
+h4 {
+ border:0 solid #fff;
+ border-bottom-width:1px;
+ padding-bottom:10px;
+ text-align: center;
+}
+
+.form-control {
+    border-radius: 10px;
+}
+
+.wrapper {
+    text-align: center;
+}
+</style>
+
+<div class="container">
+  <%= form_tag sessions_path do %>
+    <div class="row">
+        <div class="col-md-offset-5 col-md-3">
+            <div class="form-login">
+            <h4>Welcome back.</h4>
+            <%= label_tag :email %>
+            <%= text_field_tag :email, "", class: "form-control input-sm chat-input" %>
+            </br>
+            <%= label_tag :password %>
+            <%= password_field_tag :password, "", class:"form-control input-sm chat-input" %>
+            </br>
+            <div class="wrapper">
+            <span class="group-btn">
+
+              <%= submit_tag "Login", class:"btn btn-primary btn-md" %>
 <% end %>
-<br>
-<%= button_to "Logup if you don't have an account!", logup_path, method:'get'%>
+
+
+            </span>
+            </div>
+            </div>
+        </div>
+    </div>
+
+</div>
