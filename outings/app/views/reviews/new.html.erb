@@ -8,41 +8,61 @@
   outline-width: 5px;
   outline-style: solid;
 }
+
+.center {
+  width: 400px;
+  margin:10px auto;
+  text-align: center;
+  padding: 5px;
+  outline-color: red;
+  outline-width: 5px;
+  outline-style: solid;
+}
+
 </style>
 
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+      <div class="field">
+        <h1>Leave a review for <%= @location.name %>:</h1>
+          <%= form_for @review do |f| %>
 
-<h1>Leave a review for <%= @location.name %>!</h1>
-<%= form_for @review do |f| %>
+          <!-- 1 to 5 Score Radio -->
+            <%= label_tag :score,"1" %>
+            <%= f.radio_button(:score,"1") %>
+            <%= label_tag :score,"2" %>
+            <%= f.radio_button(:score,"2") %>
+            <%= label_tag :score,"3" %>
+            <%= f.radio_button(:score,"3") %>
+            <%= label_tag :score,"4" %>
+            <%= f.radio_button(:score,"4") %>
+            <%= label_tag :score,"5" %>
+            <%= f.radio_button(:score,"5") %>
 
-<!-- 1 to 5 Score Radio -->
-  <%= label_tag :score,"1" %>
-  <%= f.radio_button(:score,"1") %>
-  <%= label_tag :score,"2" %>
-  <%= f.radio_button(:score,"2") %>
-  <%= label_tag :score,"3" %>
-  <%= f.radio_button(:score,"3") %>
-  <%= label_tag :score,"4" %>
-  <%= f.radio_button(:score,"4") %>
-  <%= label_tag :score,"5" %>
-  <%= f.radio_button(:score,"5") %>
+            <br>
 
-  <br>
+          <!-- Comment Box -->
+            <%= label_tag :comment, "Any comments?" %>
+            <br>
+            <%= f.text_area(:comment) %>
+            <br>
 
-<!-- Comment Box -->
-  <%= label_tag :comment, "Any comments?" %>
-  <br>
-  <%= f.text_area(:comment) %>
-  <br>
+          <!-- Hidden field for ids -->
+            <%= f.hidden_field :location_id, {value:@location.id} %>
+            <%= f.hidden_field :user_id, {value:session[:user_id]} %>
 
-<!-- Hidden field for ids -->
-  <%= f.hidden_field :location_id, {value:@location.id} %>
-  <%= f.hidden_field :user_id, {value:session[:user_id]} %>
+            <%= f.submit "Create Reviews", class: "btn btn-primary btn-md" %>
+          <% end %>
 
-  <%= f.submit "Create Reviews" %>
-<% end %>
+          <% if flash[:notice] %>
+            <div class="center">
+                • <%= flash[:notice] %><br>
+            </div>
+          <% end %>
 
-<% if flash[:notice] %>
-<div class="row left">
-    • <%= flash[:notice] %><br>
+      </div>
+    </div>
   </div>
-<% end %>
+</div>

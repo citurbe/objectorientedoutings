@@ -8,6 +8,7 @@ class ReviewsController < ApplicationController
   def create
     @review = Review.new(review_params)
     if @review.save
+  #    byebug
       redirect_to location_path(params[:review][:location_id])
     else
       flash[:location_id]=params[:review][:location_id]

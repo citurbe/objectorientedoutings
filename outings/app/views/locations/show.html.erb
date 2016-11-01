@@ -49,7 +49,11 @@
           <%= button_to "Leave a Review!", new_review_path, {method:'get', class: 'plan', params:{location_id: @location.id}} %>
           <h2>Review History: </h2>
           <% @location.reviews.each do |review| %>
-            <h3><%= review.score.to_s+" - "+review.user.name%></h3>
+            <% if review.user.name %>
+              <h3><%= "#{review.score} - #{review.user.camel_case}"%></h3>
+            <% else %>
+              <h3><%= "#{review.score} - Anonymous" %></h3>
+            <% end %>
             <h4><%= review.comment %></h4><br>
           <% end %>
         </div>
