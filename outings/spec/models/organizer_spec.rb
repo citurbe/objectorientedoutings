@@ -64,12 +64,12 @@ RSpec.describe Organization, type: :model do
 
     it 'has a method top_users that gets the most active users' do
       expect(org.top_users.count).to eq(5)
-      expect(org.top_users[0]).to eq("Jill")
-      expect(org.top_users[1]).to eq("Janet")
-      expect(org.top_users[2]).to eq("Steve")
-      expect(org.top_users[3]).to eq("Mary")
-      expect(org.top_users[4]).to eq("Bob")
-      expect(org.top_users).not_to include("Joe")
+      expect(org.top_users.sort[0]).to include(7)
+      expect(org.top_users.sort[1]).to include(8)
+      expect(org.top_users.sort[2]).to include(9)
+      expect(org.top_users.sort[3]).to include(10)
+      expect(org.top_users.sort[4]).to include(11)
+      expect(org.top_users).not_to include(6)
     end
   end
 
