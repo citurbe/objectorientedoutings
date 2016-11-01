@@ -36,7 +36,7 @@
         <h2>Reviews:</h2>
         <h3><i><%= "None written" if @user.reviews.empty? %></i></h3>
         <% @user.reviews.each do |review| %>
-            <h3><%= review.location.name + " - "+review.score.to_s %></h3>
+            <h3><%= link_to review.location.name, location_path(review.location) %><%= " - "+review.score.to_s %></h3>
             <h4><%= review.comment %></h4><br>
         <% end unless @user.reviews.empty?%>
       </div>

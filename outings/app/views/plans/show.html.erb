@@ -3,9 +3,9 @@
     <div class="col-md-1"></div>
     <div class="col-md-5">
       <div class="field" style="position: absolute; width: 85%;">
-        <h1><%= @plan.location.name %></h1>
-        <% if @plan.location.address %><h3><%= @plan.location.address %></h3><% end %>
-        <h3><%= "with #{@plan.organizer.camel_case}" %></h3>
+        <h1><%= link_to @plan.location.name, location_path(@plan.location) %></h1>
+        <% if @plan.location.address %><h3><%= link_to @plan.location.address, location_path(@plan.location) %></h3><% end %>
+        <h3><%= link_to "with #{@plan.organizer.camel_case}", user_path(@plan.organizer) %></h3>
         <h3><%= "#{@plan.day} #{@plan.time}" %> </h3>
 
         <% if current_user %>
@@ -26,7 +26,7 @@
       <div class="field" style="position: absolute; width: 85%;">
         <h2>Currently going:</h2>
           <% @plan.users.each do |user| %>
-            <%= link_to user.name, user_path(user) %><br>
+            <h3><%= link_to user.name, user_path(user) %></h3>
           <% end %>
       </div>
     </div>
