@@ -97,7 +97,7 @@ class User < ApplicationRecord
   def line_chart_library
     {
       library:{
-        width:500,
+        backgroundColor:'#EDEDED',
         crosshair: {
           trigger: 'focus',
           orientation: 'both',

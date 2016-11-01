@@ -98,14 +98,35 @@ class Location < ApplicationRecord
   def column_chart_library
     {
       library:{
-        width:500,
+        backgroundColor:'#EDEDED',
         crosshair: {
           trigger: 'focus',
           orientation: 'both',
           focused: { color: '#3bc', opacity: 0.8 }
-        }
+        },
+        vAxis:{
+          format: '#',
+          gridlines:{
+            count: calc_ticks.size
+          },
+          ticks: calc_ticks
+        },
+        hAxis:{
+          gridlines:{
+            count: calc_ticks.size
+          },
+          ticks: calc_ticks
+        },
+        title: 'Number of reviews'
       }
     }
+  end
+
+  def calc_ticks
+    top = self.reviews.group(:score).count.values.max || 1
+    arry = [top]
+    arry.unshift(top - arry.size) while arry.size < top
+    arry
   end
 
 end
