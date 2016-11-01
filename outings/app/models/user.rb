@@ -36,6 +36,16 @@ class User < ApplicationRecord
 
   end
 
+  def self.activity_count_days(user)
+    (user.reviews.map(&:created_at) + user.plans.map(&:timing)).sort.each_with_object({}) do |time, hash|
+      if hash.has_key?(time.strftime("%b %d %Y"))
+        hash[time.strftime("%b %d %Y")] += 1
+      else
+        hash[time.strftime("%b %d %Y")] = 1
+      end
+    end
+  end
+
   def phone_digits_only
     nums = self.phone.scan(/([0-9])/).flatten.join
   end
@@ -100,15 +110,35 @@ class User < ApplicationRecord
     {
       library:{
         backgroundColor:'#EDEDED',
+        title: 'Activity',
+        titleTextStyle:{
+          italic:false,
+          bold: true,
+          fontSize:15
+        },
         crosshair: {
           trigger: 'focus',
           orientation: 'both',
           focused: { color: '#3bc', opacity: 0.8 }
         },
         vAxis:{
-          textPosition: 'none'
+          textPosition: 'none',
+          gridlines:{
+            count: calc_ticks.size
+          },
+          ticks: calc_ticks
+        },
+        hAxis:{
+          format: 'MMM d'
         }
       }
     }
+  end
+
+  def calc_ticks
+    top = User.activity_count_days(self).values.max || 1
+    arry = [top]
+    arry.unshift(top - arry.size) while arry.size < top
+    arry
   end
 end
