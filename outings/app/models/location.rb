@@ -115,9 +115,14 @@ class Location < ApplicationRecord
           gridlines:{
             count: calc_ticks.size
           },
-          ticks: calc_ticks
+          ticks: calc_ticks,
+          title: 'Rating',
+          titleTextStyle:{
+            italic:false,
+            bold:true
+          }
         },
-        title: 'Number of reviews'
+        title: 'Number of Reviews'
       }
     }
   end
