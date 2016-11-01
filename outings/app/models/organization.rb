@@ -20,7 +20,7 @@ class Organization < ApplicationRecord
   def top_users
     users.each_with_object({}) do |act, hash|
       hash[act.id] = User.activity(act).count
-    end
+    end.sort_by {|k,v| v}.reverse.first(5)
   end
 
   def top_locations

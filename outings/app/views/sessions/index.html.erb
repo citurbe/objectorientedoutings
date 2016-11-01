@@ -11,7 +11,7 @@
       <div class="field">
       <h2>Top Users:</h2>
       <% @organization.top_users.each_with_index do |user, index| %>
-        <%= link_to "#{index + 1}. #{user}", User.find_by(name: user) %><br>
+        <%= link_to "#{index + 1}. #{User.find(user[0]).name}", User.find(user[0]) %><br>
       <% end %>
       </div>
       <div class="field">
