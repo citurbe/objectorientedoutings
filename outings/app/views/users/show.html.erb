@@ -1,24 +1,51 @@
+<style>
+
+</style>
 <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
-<% if flash[:notice] %>
-  <%= flash[:notice] %>
-<% end %>
-<h1>Name: <%= @user.camel_case %></h1>
-<h2>Email: <%= @user.email %></h2>
 
-<h2>Phone:<% if @user.phone != "" %> <%= @user.display_phone %><% end %></h2>
-
-<h2>IM User: <%= @user.user_name %></h2>
-<% if @user.id == session[:user_id] %>
-  <%= button_to "Edit", edit_user_path(@user), method: 'get' %>
-<% end %>
-<h2>Your Reviews:</h2>
-<!-- Chart of reviews -->
-<h3><%= "You have no reviews yet! Why no leave one at a location above?" if @user.reviews.empty? %></h3>
-<%= line_chart @plan_chart_data, @line_chart_library %>
-
-<!-- list of reviews -->
-<ul>
-<% @user.reviews.each do |review| %>
-<li><%= link_to review.location.name, review_path(review) %></li>
-<% end unless @user.reviews.empty?%>
-</ul>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-5">
+      <div class="field">
+        <h2>Name: <%= @user.camel_case %></h2>
+        <h3>Email: <%= @user.email %></h3>
+        <h3>Phone:<% if @user.phone != "" %> <%= @user.display_phone %><% end %></h2>
+        <h3>IM User: <%= @user.user_name %></h3>
+        <% if @user.id == session[:user_id] %>
+          <%= button_to "Edit", edit_user_path(@user), {method: 'get', class: 'plan btn btn-default'} %>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="field">
+        <% if User.activity(@user).length > 0 %>
+          <div class="field">
+            <%= line_chart User.activity(@user), @line_chart_library %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-5">
+      <div class="field">
+        <h2>Reviews:</h2>
+        <h3><i><%= "None written" if @user.reviews.empty? %></i></h3>
+        <% @user.reviews.each do |review| %>
+            <h3><%= link_to review.location.name + " - "+review.score.to_s, review_path(review) %></h3>
+            <h4><%= review.comment %></h4><br>
+        <% end unless @user.reviews.empty?%>
+      </div>
+    </div>
+    <div class="col-sm-5">
+      <div class="field">
+        <h2>Plans:</h2>
+        <h3><i><%= "None written" if @user.plans.empty? %></i></h3>
+        <% @user.plans.each do |plan| %>
+            <h3><%= button_to plan.user_summary(@user), review_path(plan), class: "plan btn btn-default" %></h3>
+        <% end unless @user.plans.empty?%>
+      </div>
+    </div>
+  </div>
+</div>

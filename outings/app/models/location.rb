@@ -12,17 +12,18 @@
 
 class Location < ApplicationRecord
   has_many :plans
+  has_many :users, through: :plans
   has_many :reviews
 
   validates :name, uniqueness: true
   validates :name, presence: true
 
   def display_score
-    return 0 if self.reviews == []
-    reviews = self.reviews.map {|revs| revs.score}
-    num = 0
-    reviews.each {|rev| num += rev}
-    num.to_f/reviews.size
+    if reviews.length != 0
+      reviews.collect(&:score).sum.to_i.to_f/reviews.length
+    else
+      "No reviews"
+    end
   end
 
   def self.random_loc
@@ -44,7 +45,6 @@ class Location < ApplicationRecord
   end
 
   def time_of_day
-
     return nil if self.plans == []
     morning = 0
     afternoon = 0
@@ -54,38 +54,55 @@ class Location < ApplicationRecord
       afternoon += 1 if plan.timing.hour > 12 && plan.timing.hour < 18
       night += 1 if plan.timing.hour > 18
     end
-    return "This seems to be a morning place" if morning > afternoon && morning > night
-    return "This seems to be an afternoon place" if afternoon > morning && afternoon > night
-    return "This seems to be an evening place" if night > morning && night > afternoon
-    return "People go here at all hours"
-    end
 
-  def reviews_chart_data
-    self.reviews.group(:score).count.map do |key,val|
-      ["Rated #{key}",val]
+    return "Busy in the morning" if morning > afternoon && morning > night
+    return "Busy in the afternoon" if afternoon > morning && afternoon > night
+    return "Busy in the evening" if night > morning && night > afternoon
+    return "Always busy"
+  end
+
+  # def time_chart_data
+  #   byebug
+  #   self.plans.each_with_object({}) do |plan, hash|
+  #     hash[plan.id] = plan.timing
+  #   end
+  #   byebug
+  # end
+
+  def self.review_data(loc)
+    loc.reviews.group(:score).count.map do |key,val|
+      [key,val]
     end
   end
 
-  def pie_chart_library
-    {
-      library:{
-        pieSliceText: 'label',
-        width:600,
-        tooltip:{
-          text:'value',
-          ignoreBounds: true
-        },
-        legend: 'none'
-      }
-    }
-  end
+  # def reviews_chart_data
+  #   self.reviews.group(:score).count.map do |key,val|
+  #     [key,val]
+  #   end
+  # end
+  #
+  # def pie_chart_library
+  #   {
+  #     library:{
+  #       pieSliceText: 'label',
+  #       width:600,
+  #       tooltip:{
+  #         text:'value',
+  #         ignoreBounds: true
+  #       },
+  #       legend: 'none'
+  #     }
+  #   }
+  # end
 
   def column_chart_library
     {
       library:{
-        width:600,
-        vAxis:{
-          gridlines: {count:0}
+        width:500,
+        crosshair: {
+          trigger: 'focus',
+          orientation: 'both',
+          focused: { color: '#3bc', opacity: 0.8 }
         }
       }
     }

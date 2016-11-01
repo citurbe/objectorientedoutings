@@ -26,6 +26,14 @@ class User < ApplicationRecord
   has_many :locations, through: :plans
   has_many :reviews
 
+  def self.activity(user)
+    #1 - We grab all the reviews and plans and put zip them together in a multidimensional array
+    #2 - We sort all that activity by created_at asc then map out the created_at dates
+    #3 - We use each with object to form a hash counting the total of the hash at each entry
+    #4 - This gives us a collection with the amount of activity each time it is added to
+     user.reviews.zip(user.plans).flatten.compact.sort_by(&:created_at).map(&:created_at).each_with_object({}){|time, hash| hash[time] = hash.keys.count}.to_a
+  end
+
   def phone_digits_only
     nums = self.phone.scan(/([0-9])/).flatten.join
   end
@@ -73,43 +81,27 @@ class User < ApplicationRecord
   def conflict?(timing)
     self.plans.map(&:timing).include?(timing)
   end
-
-  def review_chart_data
-    self.reviews.group(:score).count.map do |key,val|
-      ["Rated #{key}",val]
-    end.compact
-  end
-
-  def plan_chart_data
-    self.plans.group_by_day(:timing).count.map do |key,val|
-      [key,val] if key >= 5.days.ago
-    end.compact
-  end
-
-  def bar_chart_library
-    {
-      library: {
-        width:600,
-        hAxis: {format: '###'}
-      }
-    }
-  end
+  #
+  # def review_chart_data
+  #   self.reviews.group(:score).count.map do |key,val|
+  #     ["Rated #{key}",val]
+  #   end.compact
+  # end
+  #
+  # def plan_chart_data
+  #   self.plans.group_by_day(:timing).count.map do |key,val|
+  #     [key,val] if key >= 5.days.ago
+  #   end.compact
+  # end
 
   def line_chart_library
     {
       library:{
-        width:600,
+        width:500,
         crosshair: {
           trigger: 'focus',
           orientation: 'both',
           focused: { color: '#3bc', opacity: 0.8 }
-        },
-        vAxis:{
-          gridlines: {count:0}
-        },
-        hAxis:{
-          format:'MMM d',
-          gridlines:{count:6}
         }
       }
     }
