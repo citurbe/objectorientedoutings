@@ -105,12 +105,8 @@ class User < ApplicationRecord
           orientation: 'both',
           focused: { color: '#3bc', opacity: 0.8 }
         },
-
         vAxis:{
-          # gridlines:{
-          #   count: 0
-          # }
-          format: ""
+          textPosition: 'none'
         }
       }
     }
