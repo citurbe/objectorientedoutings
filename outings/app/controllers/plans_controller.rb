@@ -17,6 +17,8 @@ class PlansController < ApplicationController
 
   def show
     @plan = Plan.find(params[:id])
+    mapper = Mapper.new(@plan.location)
+    @map_string = mapper.run
   end
 
   def edit

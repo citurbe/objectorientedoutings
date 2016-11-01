@@ -14,12 +14,12 @@ class Mapper
       search_address = self.location.address.gsub(/\'/, '').split(/[\s,]+/).join("+")
       "#{search_name}+#{search_address}"
     else
-      "#{search_name}+11+broadway+NY"
+      search_name
     end
   end
 
   def map_string
-    "https://www.google.com/maps/embed/v1/search?q=#{search_string}&key=AIzaSyAGMGxxbUMxzPUR1t6NDI-dThf8Nab34AQ&zoom=14"
+    "https://www.google.com/maps/embed/v1/search?q=#{search_string}&key=AIzaSyAGMGxxbUMxzPUR1t6NDI-dThf8Nab34AQ&zoom=13"
   end
 
   def run
