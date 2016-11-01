@@ -18,30 +18,8 @@ class Organization < ApplicationRecord
   validates :name, uniqueness: true
 
   def top_users
-    user_plans.merge(user_reviews){|key, rev, plan| rev + plan}.sort_by{|k, v| v}.reverse.map(&:first).first(5)
-  end
-
-  def user_plans
-    self.users.map(&:plans).each_with_object({}) do |plan, hash|
-      name = self.users[hash.length].camel_case
-      if plan.present?
-        if !hash[name] then hash[name] = 0 end
-        hash[name] += plan.count
-      else
-        hash[name] = 0
-      end
-    end
-  end
-
-  def user_reviews
-    self.users.map(&:reviews).each_with_object({}) do |review, hash|
-      if review.present?
-        name = User.find(review.first.user_id).camel_case
-        if !hash[name] then hash[name] = 0 end
-        hash[name] += review.count
-      else
-        hash[User.find(hash.length + 1).camel_case] = 0
-      end
+    users.each_with_object({}) do |act, hash|
+      hash[act.id] = User.activity(act).count
     end
   end
 
