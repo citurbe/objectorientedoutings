@@ -66,10 +66,10 @@ RSpec.describe User, type: :model do
 
   describe "#conflict?" do
     it "returns true if the user has another plan at the same time" do
-      expect(user.conflict?(plan.timing)).to eq("true")
+      expect(user.conflict?(plan.timing)).to eq(true)
     end
     it "returns false if the user has no other plans at the same time" do
-      expect(user.conflict?(plan.timing)).to eq("true")
+      expect(user.conflict?(plan.timing + 3)).to eq(false)
     end
   end
 

@@ -7,7 +7,7 @@
   <div class="row">
     <div class="col-sm-1"></div>
     <div class="col-sm-5">
-      <div class="field" style="position: absolute; width: 85%;">
+      <div class="field">
         <h2>Name: <%= @user.camel_case %></h2>
         <h3>Email: <%= @user.email %></h3>
         <h3>Phone:<% if @user.phone != "" %> <%= @user.display_phone %><% end %></h2>
@@ -20,14 +20,19 @@
     <div class="col-sm-5">
         <% if User.activity(@user).length > 0 %>
             <%= line_chart User.activity(@user), @line_chart_library %>
+        <% else %>
+          <div class="field">
+            <h3>This user has no activity</h3>
+          </div>
         <% end %>
+
     </div>
   </div>
   <br>
   <div class="row">
     <div class="col-sm-1"></div>
     <div class="col-sm-5">
-      <div class="field" style="position: absolute; width: 85%;">
+      <div class="field">
         <h2>Reviews:</h2>
         <h3><i><%= "None written" if @user.reviews.empty? %></i></h3>
         <% @user.reviews.each do |review| %>
