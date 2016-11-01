@@ -1,13 +1,23 @@
 <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+<style>
+.map {
+  display: block;
+}
+</style>
 
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-1"></div>
     <div class="col-sm-5">
       <div class="field">
+        <% if @location.display_score != "No reviews" %>
         <h2><%= "#{@location.name} - Rated #{@location.display_score.round(2)}"%></h2>
+        <% else %>
+        <h2><%= "#{@location.name} - Rated #{@location.display_score}"%></h2>
+        <% end %>
         <h3><%= @location.time_of_day %></h3>
         <h3>Address: <%= @location.address %></h3>
+        <%= button_to "Edit", edit_location_path(@location), {method: 'get', class: 'plan btn btn-default'} %>
       </div>
     </div>
     <% if @location.reviews.count > 0 %>
@@ -26,6 +36,8 @@
         </div>
     <% end %>
   </div>
+
+
   <div class="row">
     <div class="col-sm-1"></div>
     <div class="col-sm-5">
@@ -52,5 +64,14 @@
         </div>
       </div>
     <% end %>
+
   </div>
+  <div class="row">
+    <div class="col-sm-5">
+      <div class="field">
+        <iframe width="400" height="350" frameborder="0" style="border:0"
+      src=<%= @map_string%> allowfullscreen></iframe>
+  </div>
+</div>
+</div>
 </div>
