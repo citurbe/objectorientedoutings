@@ -110,15 +110,35 @@ class User < ApplicationRecord
     {
       library:{
         backgroundColor:'#EDEDED',
+        title: 'Activity',
+        titleTextStyle:{
+          italic:false,
+          bold: true,
+          fontSize:15
+        },
         crosshair: {
           trigger: 'focus',
           orientation: 'both',
           focused: { color: '#3bc', opacity: 0.8 }
         },
         vAxis:{
-          textPosition: 'none'
+          textPosition: 'none',
+          gridlines:{
+            count: calc_ticks.size
+          },
+          ticks: calc_ticks
+        },
+        hAxis:{
+          format: 'MMM d'
         }
       }
     }
+  end
+
+  def calc_ticks
+    top = User.activity_count_days(self).values.max || 1
+    arry = [top]
+    arry.unshift(top - arry.size) while arry.size < top
+    arry
   end
 end
