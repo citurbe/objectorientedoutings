@@ -1,5 +1,8 @@
 <style>
-
+  #plan_display {
+    width: 500px;
+    margin: 2px;
+  }
 </style>
 
 <div class="container-fluid">
@@ -23,7 +26,7 @@
       <h2 style="text-align: center;">My Schedule: </h2>
       <% if current_user %>
         <% current_user.plans.sort_by(&:timing).each do |plan| %>
-          <%= button_to plan.my_summary, plan_path(plan), {method: "get", class: "plan btn btn-default"} %>
+          <%= button_to plan.my_summary, plan_path(plan), {method: "get", id: "plan_display", class: "plan btn btn-default"} %>
         <% end %>
       <% else %>
         Not logged in!
@@ -37,10 +40,10 @@
         <% @organization.plans.sort_by(&:timing).each do |plan| %>
           <% if current_user %>
             <% if plan.front_page?(current_user) %>
-              <%= button_to plan.other_summary, plan_path(plan), {method: "get", class: "plan btn btn-default"} %>
+              <%= button_to plan.other_summary, plan_path(plan), {method: "get", id: "plan_display", class: "plan btn btn-default"} %>
             <% end %>
           <% else %>
-              <%= button_to plan.other_summary, plan_path(plan), {method: "get", class: "plan btn btn-default"} %>
+              <%= button_to plan.other_summary, plan_path(plan), {method: "get", id: "plan_display", class: "plan btn btn-default"} %>
           <% end %>
         <% end %>
       </div>
