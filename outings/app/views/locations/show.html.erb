@@ -5,7 +5,7 @@
     <div class="col-sm-1"></div>
     <div class="col-sm-5">
       <div class="field">
-        <h2><%= "#{@location.name} - #{@location.display_score}"%></h2>
+        <h2><%= "#{@location.name} - Rated #{@location.display_score.round(2)}"%></h2>
         <h3><%= @location.time_of_day %></h3>
         <h3>Address: <%= @location.address %></h3>
       </div>
