@@ -24,14 +24,21 @@
     </div>
     <% if @location.reviews.count > 0 %>
       <div class="col-sm-6">
-            <%= column_chart Location.review_data(@location), @column_chart_library %>
+        <div class="field">
+          <iframe width="400" height="350" frameborder="0" style="border:0"
+          src=<%= @map_string%> allowfullscreen></iframe>
       </div>
       <% else %>
         <div class="col-sm-6">
           <div class="field">
-            <%= button_to "Leave a Review!", new_review_path, {method:'get', class: 'plan', params:{location_id: @location.id}} %>
-            <h2>Review History: </h2>
-            <h3>Empty</h3>
+            <h1>Upcoming Events: </h1>
+            <% if @location.plans.count == 0 %>
+              No plans here at the moment.
+            <% else %>
+              <% @location.plans.each do |plan| %>
+                <h3><%= link_to plan.loc_summary, plan_path(plan) %></h3>
+              <% end %>
+            <% end %>
           </div>
         </div>
     <% end %>
@@ -43,39 +50,25 @@
     <div class="col-sm-1"></div>
     <div class="col-sm-5">
       <div class="field">
-        <h1>Upcoming Events: </h1>
-        <% if @location.plans.count == 0 %>
-          No plans here at the moment.
-        <% else %>
-          <% @location.plans.each do |plan| %>
-            <h3><%= link_to plan.loc_summary, plan_path(plan) %></h3>
+        <%= button_to "Leave a Review!", new_review_path, {method:'get', class: 'plan', params:{location_id: @location.id}} %>
+        <h2>Review History: </h2>
+        <% @location.reviews.each do |review| %>
+          <% if review.user.name %>
+            <h3><%= "#{review.score} - "%><%= link_to review.user.camel_case, user_path(review.user) %></h3>
+          <% else %>
+            <h3><%= "#{review.score} - Anonymous" %></h3>
           <% end %>
+          <h4><%= review.comment %></h4><br>
         <% end %>
       </div>
     </div>
     <% if @location.reviews.count > 0 %>
       <div class="col-sm-6">
         <div class="field">
-          <%= button_to "Leave a Review!", new_review_path, {method:'get', class: 'plan', params:{location_id: @location.id}} %>
-          <h2>Review History: </h2>
-          <% @location.reviews.each do |review| %>
-            <% if review.user.name %>
-              <h3><%= "#{review.score} - "%><%= link_to review.user.camel_case, user_path(review.user) %></h3>
-            <% else %>
-              <h3><%= "#{review.score} - Anonymous" %></h3>
-            <% end %>
-            <h4><%= review.comment %></h4><br>
-          <% end %>
+            <%= column_chart Location.review_data(@location), @column_chart_library %>
         </div>
       </div>
     <% end %>
-
-  </div>
-  <div class="row">
-    <div class="col-sm-5">
-      <div class="field">
-        <iframe width="400" height="350" frameborder="0" style="border:0"
-      src=<%= @map_string%> allowfullscreen></iframe>
   </div>
 </div>
 </div>
