@@ -10,13 +10,21 @@
         <h3>Address: <%= @location.address %></h3>
       </div>
     </div>
-    <div class="col-sm-6">
-      <div class="field">
-        <% if @location.reviews.count > 0 %>
-          <%= column_chart Location.review_data(@location), @column_chart_library %>
-        <% end %>
+    <% if @location.reviews.count > 0 %>
+      <div class="col-sm-6">
+        <div class="field">
+            <%= column_chart Location.review_data(@location), @column_chart_library %>
+        </div>
       </div>
-    </div>
+      <% else %>
+        <div class="col-sm-6">
+          <div class="field">
+            <%= button_to "Leave a Review!", new_review_path, {method:'get', class: 'plan', params:{location_id: @location.id}} %>
+            <h2>Review History: </h2>
+            <h3>Empty</h3>
+          </div>
+        </div>
+    <% end %>
   </div>
   <div class="row">
     <div class="col-sm-1"></div>
@@ -32,15 +40,17 @@
         <% end %>
       </div>
     </div>
-    <div class="col-sm-6">
-      <div class="field">
-        <%= button_to "Leave a Review!", new_review_path, {method:'get', class: 'plan', params:{location_id: @location.id}} %>
-        <h2>Review History: </h2>
-        <% @location.reviews.each do |review| %>
-          <h3><%= link_to review.score.to_s+" - "+review.user.name, review_path(review) %></h3>
-          <h4><%= review.comment %></h4><br>
-        <% end %>
+    <% if @location.reviews.count > 0 %>
+      <div class="col-sm-6">
+        <div class="field">
+          <%= button_to "Leave a Review!", new_review_path, {method:'get', class: 'plan', params:{location_id: @location.id}} %>
+          <h2>Review History: </h2>
+          <% @location.reviews.each do |review| %>
+            <h3><%= link_to review.score.to_s+" - "+review.user.name, review_path(review) %></h3>
+            <h4><%= review.comment %></h4><br>
+          <% end %>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>

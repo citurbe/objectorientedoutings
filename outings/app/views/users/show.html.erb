@@ -43,7 +43,7 @@
         <h2>Plans:</h2>
         <h3><i><%= "None written" if @user.plans.empty? %></i></h3>
         <% @user.plans.each do |plan| %>
-            <h3><%= button_to plan.summary("#{@user.camel_case} is"), review_path(plan), class: "plan btn btn-default" %></h3>
+            <h3><%= button_to plan.user_summary(@user), review_path(plan), class: "plan btn btn-default" %></h3>
         <% end unless @user.plans.empty?%>
       </div>
     </div>
