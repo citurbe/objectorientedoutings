@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-5">
-      <div class="field" style="position: absolute; width: 85%;">
+      <div class="field">
         <h1><%= link_to @plan.location.name, location_path(@plan.location) %></h1>
         <% if @plan.location.address %><h3><%= link_to @plan.location.address, location_path(@plan.location) %></h3><% end %>
         <h3><%= link_to "with #{@plan.organizer.camel_case}", user_path(@plan.organizer) %></h3>
@@ -22,8 +22,9 @@
         <% end %>
       </div>
     </div>
+
     <div class="col-md-5">
-      <div class="field" style="position: absolute; width: 85%;">
+      <div class="field">
         <h2>Currently going:</h2>
           <% @plan.users.each do |user| %>
             <h3><%= link_to user.name, user_path(user) %></h3>
@@ -31,4 +32,15 @@
       </div>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-md-6">
+    </div>
+    <div class="col-sm-5">
+      <div class="field">
+        <iframe width="400" height="350" frameborder="0" style="border:0"
+      src=<%= @map_string%> allowfullscreen></iframe>
+  </div>
+</div>
+</div>
 </div>

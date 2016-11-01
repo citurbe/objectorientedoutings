@@ -1,0 +1,15 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-5">
+      <div class="field">
+          <%= form_for @location do |f| %>
+          Name:  <%= f.text_field :name %>
+          <br>
+          Address: <%= f.text_field :address %>
+          <br>
+          <%= f.submit "Save" %>
+<% end %>
+      </div>
+    </div>
+  </div>
+</div>

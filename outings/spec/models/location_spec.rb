@@ -16,19 +16,19 @@ RSpec.describe Location, type: :model do
 
   describe '#time_of_day' do
     it 'correctly identifies a morning place' do
-      expect(bagels.time_of_day).to eq("This seems to be a morning place")
+      expect(bagels.time_of_day).to include("morning")
     end
 
     it 'correctly identifies an afternoon place' do
-      expect(chipotle.time_of_day).to eq("This seems to be an afternoon place")
+      expect(chipotle.time_of_day).to include("afternoon")
     end
 
     it 'correctly identifies an evening place' do
-      expect(bar.time_of_day).to eq("This seems to be an evening place")
+      expect(bar.time_of_day).to include("evening")
     end
 
     it 'correctly identifies an ambiguous place' do
-      expect(subway.time_of_day).to eq("People go here at all hours")
+      expect(subway.time_of_day).to include("busy")
     end
   end
 

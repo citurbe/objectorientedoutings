@@ -1,19 +1,113 @@
-<% if flash[:notice] %>
-  <%= flash[:notice] %>
-<% end %>
-<%= form_for @user do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
-<br>
-  <%= f.label :email %>
-  <%= f.email_field :email %>
-<br>
-  <%= f.label :phone %>
-  <%= f.text_field :phone %>
-<br>
-  <%= f.label :user_name %>
-  <%= f.text_field :user_name %>
-<br>
-  <%= f.submit "Update" %>
-<br>
-<% end %>
+<style>
+body{
+  background-color: #525252;
+}
+
+h4 {
+ border:0 solid #fff;
+ border-bottom-width:1px;
+ padding-bottom:10px;
+ text-align: center;
+}
+
+.form-control {
+    border-radius: 10px;
+}
+.centered-form{
+  background-color: #EDEDED;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 15px;
+  border-color:#d2d2d2;
+  border-width: 5px;
+  width: 50%;
+  margin: 0 auto;
+  box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+  	background: rgba(255, 255, 255, 0.8);
+}
+
+.btn-md {
+  width: 100%;
+}
+
+.center {
+  width: 400px;
+  margin:10px auto;
+  text-align: center;
+  padding: 5px;
+  outline-color: red;
+  outline-width: 5px;
+  outline-style: solid;
+
+}
+
+</style>
+
+
+
+<div class="container">
+    <div class="row centered-form">
+      <h4>Edit Account</h4>
+      <div class="col-md-offset-5 col-md-6">
+      </div>
+
+      <%= form_for @user do |f| %>
+	    			<div class="row">
+	    				<div class="col-xs-6 col-sm-6 col-md-6">
+	    					<div class="form-group">
+                  <%= f.label :name %>
+                  <%= f.text_field :name, class: "form-control input-sm"%>
+	    					</div>
+	    				</div>
+	    				<div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group">
+                  <%= f.label :email %>
+                  <%= f.email_field :email, class: "form-control input-sm" %>
+			    			</div>
+	    				</div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <%= f.label :phone %>
+                    <%= f.text_field :phone, class: "form-control input-sm" %>
+                  </div>
+                </div>
+                  <div class="col-xs-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <%= f.label :user_name %>
+                    <%= f.text_field :user_name, class: "form-control input-sm" %>
+                  </div>
+                </div>
+              </div>  
+
+            <div class="row">
+              <div class="col-xs-6 col-sm-6 col-md-6">
+              <div class="form-group">
+                <%= f.label "Organization" %>
+                <%= f.select :organization_id, @organizations.collect{|org| [org.name, org.id]}, include_blank: true, class: "form-control input-sm"%>
+              </div>
+            </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-4 col-sm-4 col-md-4"></div>
+            <div class="col-xs-4 col-sm-4 col-md-4">
+              <%= f.submit "Save", class: "btn btn-primary btn-md"%>
+              </div>
+            </div>
+              <% if flash[:notice] %>
+                <div class="row center">
+                  <% flash[:notice].each do |error| %>
+                  • <%= error %><br>
+                <% end %>
+                </div>
+              <% end %>
+
+    <% end %>
+
+  </div>
+</div>
