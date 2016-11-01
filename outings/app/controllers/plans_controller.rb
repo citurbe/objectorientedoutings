@@ -24,19 +24,18 @@ class PlansController < ApplicationController
   end
 
   def update
-    @plan = Plan.find(params[:id])
-    @plan.update_attributes(location_id: get_loc(params), timing: params[:plan][:timing])
-    if !@plan.errors.messages.empty?
-      flash[:notice] = @plan.errors.full_messages
-      redirect_to edit_plan_path(@plan)
-    else
-      redirect_to plan_path(@plan)
+    if params[:plan][:timing] == "" || (params[:plan][:location_id] == "" && params[:plan][:location] == "")
+      flash[:notice] = "Missing required information"
+      return redirect_to edit_plan_path
     end
-
+    @plan = Plan.find(params[:id])
+    plan_editor = PlanEditor.new(params:params[:plan], current_user: current_user, plan: @plan)
+    redirect_to plan_path plan_editor.run
   end
 
   def destroy
     Plan.find(params[:id]).destroy
+    Outing.destroy(Outing.all.select{|out| out.plan_id == params[:id]})
     redirect_to root_path
   end
 

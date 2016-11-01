@@ -1,35 +1,96 @@
 <style>
-.left {
+body{
+    background-color: #525252;
+}
+
+h4 {
+ border:0 solid #fff;
+ border-bottom-width:1px;
+ padding-bottom:10px;
+ text-align: center;
+}
+
+.form-control {
+  border-radius: 10px;
+}
+.centered-form{
+  background-color: #EDEDED;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 15px;
+  border-color:#d2d2d2;
+  border-width: 5px;
+  width: 50%;
+  margin: 0 auto;
+  box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.center {
   width: 400px;
-  margin:10px;
-  text-align: left;
+  margin:10px auto;
+  text-align: center;
   padding: 5px;
   outline-color: red;
   outline-width: 5px;
   outline-style: solid;
+
 }
+
+.btn-md{
+  width: 100%;
+}
+
+
 </style>
 
 
 
-<h1>Make a Plan: </h1>
-<%= form_for @plan do |f| %>
-  <h2>Where? </h2>
-    <h3>Places we've been: <%= f.select :location_id, Location.all.collect{|l| [l.name, l.id]}, include_blank: true %></h3>
-    <br>
-    <h3>Make a new one: <%= f.text_field :location%></h3>
-  <br>
-  <% if current_user.favorite_place != nil %>
-  <h3>Can't decide? Your current favorite place is: <%= current_user.favorite_place.name %></h3>
-  <% end %>
-  <br>
-  <h2>When? </h2><%= f.datetime_local_field :timing%>
-  <br>
-  <%= f.submit "Create Plan" %>
+<div class="container">
+    <div class="row centered-form">
+      <h4>Make a Plan</h4>
+      <div class="col-md-offset-4 col-md-8">
+      </div>
 
-<% end %>
-<% if flash[:notice] %>
-<div class="row left">
-    • <%= flash[:notice] %><br>
+      <%= form_for @plan do |f| %>
+	    			<div class="row">
+              <div class="col-xs-2 col-sm-2 col-md-2"></div>
+	    				<div class="col-xs-10 col-sm-10 col-md-10">
+                <h2>Where? </h2>
+                  <h3>Places we've been: <%= f.select :location_id, Location.all.collect{|l| [l.name, l.id]}, include_blank: true %></h3>
+                  <h3>or</h3>
+                  <h3>Make a new one: <%= f.text_field :location%></h3>
+	    				</div>
+            </div>
+            <div class="row">
+              <div class="col-xs-2 col-sm-2 col-md-2"></div>
+	    				<div class="col-xs-10 col-sm-10 col-md-10">
+                <div class="form-group">
+                  <% if current_user.favorite_place != nil %>
+                    <h3>Can't decide?<br><br>Your current favorite place is: <%= current_user.favorite_place.name %></h3>
+                  <% end %>
+                  <br>
+                  <h2>When? </h2><%= f.datetime_local_field :timing%>
+                  <br>
+			    			</div>
+	    				</div>
+            </div>
+            <div class="row">
+              <div class="col-xs-4 col-sm-4 col-md-4"></div>"
+            <div class="col-xs-4 col-sm-4 col-md-4">
+              <%= submit_tag "Create Plan", class: "btn btn-primary btn-md"%>
+            </div>
+          </div>
+
+      <% end %>
+
+      <% if flash[:notice] %>
+      <div class="row center">
+          • <%= flash[:notice] %><br>
+        </div>
+      <% end %>
+
   </div>
-<% end %>
+</div>

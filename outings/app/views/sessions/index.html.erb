@@ -36,7 +36,11 @@
   <div class="row">
     <div class="col-md-3"></div>
       <div class="col-sm-8 field">
-        <h2 style="text-align: center;"><%= current_user.organization.name %>: </h2>
+        <% if current_user %>
+          <h2 style="text-align: center;"><%= current_user.organization.name %>: </h2>
+        <% else %>
+          <h2 style="text-align: center;">Upcoming: </h2>
+        <% end %>
         <% @organization.plans.sort_by(&:timing).each do |plan| %>
           <% if current_user %>
             <% if plan.front_page?(current_user) %>
