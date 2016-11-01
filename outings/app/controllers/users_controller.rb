@@ -4,9 +4,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    # @review_chart_data = @user.review_chart_data
-    # @bar_chart_library = @user.review_chart_library
-    # @plan_chart_data = User.activity(@user)
     @line_chart_library = @user.line_chart_library
   end
 
@@ -16,14 +13,13 @@ class UsersController < ApplicationController
   end
 
   def create
-  #  byebug
     present_params = params[:user].select{|k, v| params[:user][k] != ""}
     @user = User.new(user_params(present_params.keys))
-  #  byebug
     if params[:user][:password] == params[:user][:password_confirmation] && @user.save
       session[:user_id] = @user.id
       redirect_to user_path(@user)
     else
+      @user.errors[:password] = " and Confirm Password do not match" unless params[:user][:password] == params[:user][:password_confirmation]
       flash[:notice] = @user.errors.full_messages
       redirect_back fallback_location: "/"
     end
