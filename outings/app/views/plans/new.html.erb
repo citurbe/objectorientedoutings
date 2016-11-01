@@ -48,7 +48,7 @@ h4 {
 
 
 
-<<<<<<< HEAD
+
 <div class="container">
     <div class="row centered-form">
       <h4>Make a Plan</h4>
@@ -93,28 +93,5 @@ h4 {
         </div>
       <% end %>
 
-=======
-<h1>Make a Plan: </h1>
-<%= form_for @plan do |f| %>
-  <h2>Where? </h2>
-    <h3>Places we've been: <%= f.select :location_id, Location.all.collect{|l| [l.name, l.id]}, include_blank: true %></h3>
-    <br>
-    <h3>Make a new one</h3>
-    <h3>Name: <%= f.text_field :location%></h3>
-    
-  <br>
-  <% if current_user.favorite_place != nil %>
-  <h3>Can't decide? Your current favorite place is: <%= current_user.favorite_place.name %></h3>
-  <% end %>
-  <br>
-  <h2>When? </h2><%= f.datetime_local_field :timing%>
-  <br>
-  <%= f.submit "Create Plan" %>
-
-<% end %>
-<% if flash[:notice] %>
-<div class="row left">
-    • <%= flash[:notice] %><br>
->>>>>>> location_support
   </div>
 </div>
