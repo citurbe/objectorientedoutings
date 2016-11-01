@@ -19,9 +19,12 @@ RSpec.describe User, type: :model do
   let(:org) { Organization.create(name: 'Google')}
   let(:chipotle) { Location.create(name: 'Chipotle')}
   let(:bagels) {Location.create(name: 'The Bagel Place')}
-  let(:user) { User.create(name: 'bob', email: 'email@email', password: '123', password_confirmation: '123',phone: "9146935919", organization_id: org.id)}
-  let(:user2) { User.create(name: 'Mary', password: '123', email: 'email@email', password_confirmation: '123', phone:"914-693-4922", organization_id: org.id)}
-  let(:plan) { Plan.create(location_id: bagels.id, user_id: user.id)}
+  let!(:user) { User.create(name: 'boB SMith', email: 'email@email', password: '123', password_confirmation: '123',phone: "9146935919", organization_id: org.id)}
+  let!(:user2) { User.create(name: 'Mary', password: '123', email: 'email@email', password_confirmation: '123', phone:"914-693-4922", organization_id: org.id)}
+  let!(:review1) {Review.create(user: user, location: chipotle, score: 3, comment: Faker::Lorem.sentence)}
+  let!(:review2) {Review.create(user: user, location: chipotle, score: 1, comment: Faker::Lorem.sentence)}
+  let!(:plan) { Plan.create(location: bagels, organizer: user, timing: Time.now)}
+  let!(:outing) { Outing.create(plan: plan, user: user)}
 
 
 
@@ -46,6 +49,27 @@ RSpec.describe User, type: :model do
 
     it "returns nil when a user has not reviewed any restaurants" do
       expect(user2.favorite_place).to eq (nil)
+    end
+  end
+
+  describe '#self.activity' do
+    it "returns a list of the datetime when a user left a review or went on an outing" do
+      expect(User.activity(user)).to eq([[review1.created_at, 0], [review2.created_at, 1], [plan.timing, 2]])
+    end
+  end
+
+  describe '#camel_case' do
+    it "returns the name of the individual with the first letter of each word capitalized" do
+      expect(user.camel_case).to eq("BoB SMith")
+    end
+  end
+
+  describe "#conflict?" do
+    it "returns true if the user has another plan at the same time" do
+      expect(user.conflict?(plan.timing)).to eq("true")
+    end
+    it "returns false if the user has no other plans at the same time" do
+      expect(user.conflict?(plan.timing)).to eq("true")
     end
   end
 
