@@ -5,8 +5,9 @@
 
 <div class="container-fluid">
   <div class="row">
+    <div class="col-sm-1"></div>
     <div class="col-sm-5">
-      <div class="field">
+      <div class="field" style="position: absolute; width: 85%;">
         <h2>Name: <%= @user.camel_case %></h2>
         <h3>Email: <%= @user.email %></h3>
         <h3>Phone:<% if @user.phone != "" %> <%= @user.display_phone %><% end %></h2>
@@ -16,24 +17,21 @@
         <% end %>
       </div>
     </div>
-    <div class="col-sm-4">
-      <div class="field">
+    <div class="col-sm-5">
         <% if User.activity(@user).length > 0 %>
-          <div class="field">
             <%= line_chart User.activity(@user), @line_chart_library %>
-          </div>
         <% end %>
-      </div>
     </div>
   </div>
+  <br>
   <div class="row">
     <div class="col-sm-1"></div>
     <div class="col-sm-5">
-      <div class="field">
+      <div class="field" style="position: absolute; width: 85%;">
         <h2>Reviews:</h2>
         <h3><i><%= "None written" if @user.reviews.empty? %></i></h3>
         <% @user.reviews.each do |review| %>
-            <h3><%= link_to review.location.name + " - "+review.score.to_s, review_path(review) %></h3>
+            <h3><%= review.location.name + " - "+review.score.to_s %></h3>
             <h4><%= review.comment %></h4><br>
         <% end unless @user.reviews.empty?%>
       </div>
@@ -43,7 +41,7 @@
         <h2>Plans:</h2>
         <h3><i><%= "None written" if @user.plans.empty? %></i></h3>
         <% @user.plans.each do |plan| %>
-            <h3><%= button_to plan.user_summary(@user), review_path(plan), class: "plan btn btn-default" %></h3>
+            <h3><%= button_to plan.user_summary(@user), plan_path(plan), {method: "get", class: "plan btn btn-default"} %></h3>
         <% end unless @user.plans.empty?%>
       </div>
     </div>

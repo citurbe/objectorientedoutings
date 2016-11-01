@@ -1,6 +1,6 @@
 <style>
 body{
-    background-color: #525252;
+  background-color: #525252;
 }
 
 h4 {
@@ -114,14 +114,13 @@ h4 {
               <%= f.submit "Logup", class: "btn btn-primary btn-md"%>
               </div>
             </div>
-              <div class="row center">
               <% if flash[:notice] %>
-                <% flash[:notice].each do |error| %>
+                <div class="row center">
+                  <% flash[:notice].each do |error| %>
                   • <%= error %><br>
                 <% end %>
+                </div>            
               <% end %>
-          </div>
-
 
     <% end %>
 

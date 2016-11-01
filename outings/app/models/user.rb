@@ -31,7 +31,9 @@ class User < ApplicationRecord
     #2 - We sort all that activity by created_at asc then map out the created_at dates
     #3 - We use each with object to form a hash counting the total of the hash at each entry
     #4 - This gives us a collection with the amount of activity each time it is added to
-     user.reviews.zip(user.plans).flatten.compact.sort_by(&:created_at).map(&:created_at).each_with_object({}){|time, hash| hash[time] = hash.keys.count}.to_a
+
+    (user.reviews.map(&:created_at) + user.plans.map(&:timing)).sort.each_with_object({}){|time, hash| hash[time] = hash.keys.count}.to_a
+
   end
 
   def phone_digits_only
@@ -102,6 +104,13 @@ class User < ApplicationRecord
           trigger: 'focus',
           orientation: 'both',
           focused: { color: '#3bc', opacity: 0.8 }
+        },
+
+        vAxis:{
+          # gridlines:{
+          #   count: 0
+          # }
+          format: ""
         }
       }
     }
