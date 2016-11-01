@@ -30,8 +30,20 @@ class Plan < ApplicationRecord
     end
   end
 
-  def summary(user = nil)
-    "#{self.current?(user)} going to #{self.location.name} with #{self.users.count - 1} other people on #{self.day} at #{self.timing.strftime('%r')}"
+  def my_summary
+    "#{self.location.name} on #{self.day} at #{self.time}"
+  end
+
+  def other_summary
+    "#{organizer.camel_case} at #{self.location.name} w/ #{self.users.count - 1} others on #{self.day} at #{self.time}"
+  end
+
+  def user_summary(user)
+    "#{user.camel_case} at #{self.location.name}  w/ #{self.users.count - 1} others at on #{self.day} #{self.time}"
+  end
+
+  def loc_summary
+    "#{organizer.camel_case} - #{self.users.count} - #{self.day} #{self.time}"
   end
 
   def current?(user)
@@ -47,6 +59,10 @@ class Plan < ApplicationRecord
 
   def day
     self.timing.strftime('%a, %b %d')
+  end
+
+  def time
+    self.timing.strftime('%r')
   end
 
   def front_page?(current_user)

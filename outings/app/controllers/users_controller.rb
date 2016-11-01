@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     # @review_chart_data = @user.review_chart_data
     # @bar_chart_library = @user.review_chart_library
-    @plan_chart_data = @user.plan_chart_data
+    # @plan_chart_data = User.activity(@user)
     @line_chart_library = @user.line_chart_library
   end
 

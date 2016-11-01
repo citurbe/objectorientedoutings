@@ -7,7 +7,6 @@ class PlanMaker
     @loc = get_loc(params)
   end
 
-
   def get_loc(params)
     if params[:location_id] != "" && !params[:location_id] != nil
       Location.find(params[:location_id])
