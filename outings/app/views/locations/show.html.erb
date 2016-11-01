@@ -8,7 +8,7 @@
         <% if @location.display_score != "No reviews" %>
           <h2><%= "#{@location.name} - Rated #{@location.display_score.round(2)}"%></h2>
         <% else %>
-          <h2><%= "#{@location.name} - Rated #{@location.display_score}"%></h2>
+          <h2><%= "#{@location.name} - #{@location.display_score}"%></h2>
          <% end %>
         <h3><%= @location.time_of_day %></h3>
         <h3>Address: <%= @location.address %></h3>
@@ -38,7 +38,7 @@
           No plans here at the moment.
         <% else %>
           <% @location.plans.each do |plan| %>
-            <h3><%= plan.loc_summary %></h3>
+            <h3><%= link_to plan.loc_summary, plan_path(plan) %></h3>
           <% end %>
         <% end %>
       </div>
@@ -50,7 +50,7 @@
           <h2>Review History: </h2>
           <% @location.reviews.each do |review| %>
             <% if review.user.name %>
-              <h3><%= "#{review.score} - #{review.user.camel_case}"%></h3>
+              <h3><%= "#{review.score} - "%><%= link_to review.user.camel_case, user_path(review.user) %></h3>
             <% else %>
               <h3><%= "#{review.score} - Anonymous" %></h3>
             <% end %>

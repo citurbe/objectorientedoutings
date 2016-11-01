@@ -50,7 +50,7 @@ h4 {
 
 <div class="container">
     <div class="row centered-form">
-      <h4>Make a Plan</h4>
+      <h4>Edit Plan</h4>
       <div class="col-md-offset-4 col-md-8">
       </div>
 
@@ -61,7 +61,7 @@ h4 {
                 <h2>Where? </h2>
                   <h3>Places we've been: <%= f.select :location_id, Location.all.collect{|l| [l.name, l.id]}, include_blank: true %></h3>
                   <h3>or</h3>
-                  <h3>Make a new one: <%= f.text_field :location%></h3>
+                  <h3>Make a new one: <%= f.text_field :location, {value: ""}%></h3>
 	    				</div>
             </div>
             <div class="row">
