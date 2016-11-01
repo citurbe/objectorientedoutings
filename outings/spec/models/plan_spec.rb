@@ -20,5 +20,15 @@ RSpec.describe Plan, type: :model do
   let!(:plan) { Plan.create(location: bagels, organizer: user, timing: Time.now)}
   let!(:outing) { Outing.create(plan: plan, user: user)}
 
-
+  describe "#summary" do
+    it "my_summary grabs name, day, and time and displays them" do
+      expect(plan.my_summary).to include(plan.day)
+    end
+    it "other_summary displays additional data including organizer_name" do
+      expect(plan.other_summary).to include(plan.day)
+    end
+    it "user_summary displays the data from the perspective of another user" do
+      expect(plan.user_summary(user)).to include(plan.day)
+    end
+  end
 end
