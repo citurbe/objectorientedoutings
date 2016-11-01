@@ -19,7 +19,7 @@
     </div>
     <div class="col-sm-5">
         <% if User.activity(@user).length > 0 %>
-            <%= line_chart User.activity(@user), @line_chart_library %>
+            <%= line_chart User.activity_count_days(@user), @line_chart_library %>
         <% else %>
           <div class="field">
             <h3>This user has no activity</h3>

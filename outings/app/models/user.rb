@@ -36,6 +36,16 @@ class User < ApplicationRecord
 
   end
 
+  def self.activity_count_days(user)
+    (user.reviews.map(&:created_at) + user.plans.map(&:timing)).sort.each_with_object({}) do |time, hash|
+      if hash.has_key?(time.strftime("%b %d %Y"))
+        hash[time.strftime("%b %d %Y")] += 1
+      else
+        hash[time.strftime("%b %d %Y")] = 1
+      end
+    end
+  end
+
   def phone_digits_only
     nums = self.phone.scan(/([0-9])/).flatten.join
   end
